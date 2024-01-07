@@ -23,7 +23,9 @@ Build system
 Engine
 
 - [x] ADD ImGui submodule
-- [x] ADD Opengl submodule
+- [x] ADD GLFW submodule
+- [x] ADD Glew submodule
+- [x] ADD GTEST submodule
 
 - [ ] CONFIGURE basic ENGINE hierarchy.
 - [ ] CREATE Core Engine loop
