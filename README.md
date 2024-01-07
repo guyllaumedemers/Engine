@@ -1,2 +1,3 @@
 # Opengl-Danmaku
-Demo project
+
+[Res](https://sparen.github.io/ph3tutorials/ddsga2.html)
