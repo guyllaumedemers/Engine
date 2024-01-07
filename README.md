@@ -22,6 +22,9 @@ Build system
 
 Engine
 
+- [x] ADD ImGui submodule
+- [x] ADD Opengl submodule
+
 - [ ] CONFIGURE basic ENGINE hierarchy.
 - [ ] CREATE Core Engine loop
 
@@ -36,7 +39,6 @@ Game
 
 Tooling
 
-- [ ] ADD ImGui Thirdparty plugin
 - [ ] CREATE an ImGUI Visualizer SYSTEM.
 - [ ] ADD functionality to Visualizer so we can parametrize our Entity Movement behaviour
 
