@@ -18,11 +18,46 @@
 //OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 //SOFTWARE.
 
-extern "C" void __cdecl EngineInit();
+#pragma once
 
-int main(int argc, char* argv[]) {
+// stl headers
+#include <memory>
+#include <set>
+#include <unordered_map>
+#include <utility>
 
-	// TODO @gdemers 2024-01-07 Defined how Game should be inject into the Engine core loop
-	EngineInit();
-	return 0;
+// engine headers
+#include "Public/Misc/CoreDefines.h"
+
+template<typename TKey, typename TValue>
+using TMap = std::unordered_map<TKey, TValue>;
+
+template<typename T>
+using TSet = std::set<T>;
+
+template<typename T>
+using TUniquePtr = std::unique_ptr<T>;
+
+template<typename T, typename ...Args>
+TUniquePtr<T> MakeUnique(Args... args) {
+
+	return std::make_unique<T>(std::forward<Args>(args)...);
+}
+
+template<typename T>
+using TSharedPtr = std::shared_ptr<T>;
+
+template<typename T, typename ...Args>
+TSharedPtr<T> MakeShared(Args... args) {
+
+	return std::make_shared<T>(std::forward<Args>(args)...);
+}
+
+template<typename T>
+using TWeakPtr = std::weak_ptr<T>;
+
+template<typename T>
+extern bool IsValid(void* Pointer) {
+
+	return (reinterpret_cast<T>(Pointer) != nullptr);
 };

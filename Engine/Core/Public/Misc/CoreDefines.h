@@ -20,40 +20,19 @@
 
 #pragma once
 
-#include <memory>
-#include <set>
-#include <unordered_map>
-#include <utility>
+// TODO @gdemers 2024-01-09 Remove once build files are generated
+#define ENGINE_PLATFORM_WINDOWS
 
-template<typename TKey, typename TValue>
-using TMap = std::unordered_map<TKey, TValue>;
+// compiler flag for platform specific check
+#ifdef ENGINE_PLATFORM_WINDOWS
+	// additional flag pass to dll build process
+	#ifdef ENGINE_BUILD_DLL
+		#define ENGINE_API __declspec(dllexport)
+	#else
+	// no present in executable build process
+		#define ENGINE_API __declspec(dllimport)	
+	#endif
+#endif
 
-template<typename T>
-using TSet = std::set<T>;
-
-template<typename T>
-using TUniquePtr = std::unique_ptr<T>;
-
-template<typename T, typename ...Args>
-TUniquePtr<T> MakeUnique(Args... args) {
-
-	return std::make_unique<T>(std::forward<Args>(args)...);
-}
-
-template<typename T>
-using TSharedPtr = std::shared_ptr<T>;
-
-template<typename T, typename ...Args>
-TSharedPtr<T> MakeShared(Args... args) {
-
-	return std::make_shared<T>(std::forward<Args>(args)...);
-}
-
-template<typename T>
-using TWeakPtr = std::weak_ptr<T>;
-
-template<typename T>
-extern bool IsValid(void* Pointer) {
-
-	return (reinterpret_cast<T>(Pointer) != nullptr);
-};
+#define FALSE 0
+#define TRUE 1
