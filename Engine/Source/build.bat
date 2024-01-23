@@ -36,10 +36,9 @@ FOR /f usebackq %%i in (`DIR /ad /b %~dp0 ^| FINDSTR /v /i ThirdParty`) do (
 )
 
 SET assembly=engine
-SET compilerFlags=/Z7 /LD /Wall /WX
-SET includeFlags=/IRuntime
-::SET linkerFlags=-l
+SET compilerFlags=-g -shared -Wall -Werror -std=c++17
+SET includeFlags=-IRuntime
 SET defines=-D_DEBUG -DENGINE_BUILD_DLL -D_CRT_SECURE_NO_WARNINGS
 
 ECHO "Building %assembly%"
-clang-cl %cppFilenames% %compilerFlags% -o ../bin/%assembly%.dll %defines% %includeFlags% %linkerFlags%
+clang++ %cppFilenames% %compilerFlags% -o ..\\out\\%assembly%.dll %defines% %includeFlags%
