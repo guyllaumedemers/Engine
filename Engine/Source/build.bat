@@ -27,7 +27,7 @@ SET cppFilenames=
 FOR /f usebackq %%i in (`DIR /ad /b %~dp0 ^| FINDSTR /v /i ThirdParty`) do (
 	ECHO "Fetching all translation units to be compiled..."
 	:: update current directory as FOR /r [drive:path] doesnt support %VAR%
-	PUSHD "!dirRuntime!%%i\"
+	PUSHD "%%i"
 	FOR /r %%k in (*.cpp) do (
 		SET cppFilenames=!cppFilenames! %%k
 		ECHO %%k
