@@ -25,6 +25,7 @@ SETLOCAL enabledelayedexpansion
 :: get list of all *.cpp	- https://learn.microsoft.com/en-us/windows-server/administration/windows-commands/for
 SET cppFilenames=
 FOR /f usebackq %%i in (`DIR /ad /b %~dp0 ^| FINDSTR /v /i ThirdParty`) do (
+	ECHO "Fetching all translation units to be compiled..."
 	:: update current directory as FOR /r [drive:path] doesnt support %VAR%
 	PUSHD "!dirRuntime!%%i\"
 	FOR /r %%k in (*.cpp) do (
@@ -33,3 +34,12 @@ FOR /f usebackq %%i in (`DIR /ad /b %~dp0 ^| FINDSTR /v /i ThirdParty`) do (
 	)
 	POPD
 )
+
+SET assembly=engine
+SET compilerFlags=/Z7 /LD /Wall /WX
+SET includeFlags=/IRuntime
+::SET linkerFlags=-l
+SET defines=-D_DEBUG -DENGINE_BUILD_DLL -D_CRT_SECURE_NO_WARNINGS
+
+ECHO "Building %assembly%"
+clang-cl %cppFilenames% %compilerFlags% -o ../bin/%assembly%.dll %defines% %includeFlags% %linkerFlags%
