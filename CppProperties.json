@@ -2,16 +2,18 @@
   "configurations": [
     {
       "inheritEnvironments": [
-        "clang-cl"
+        "clang++"
       ],
-      "name": "Win32-Debug",
+      "name": "Engine-Win32-Debug",
       "includePath": [
         "${workspaceRoot}\\engine\\source\\**",
         "${env.MVS_INCLUDES}\\**"
 
       ],
       "defines": [
-        "_DEBUG"
+        "_WIN32",
+        "_DEBUG",
+        "ENGINE_BUILD_DLL"
       ],
       "intelliSenseMode": "windows-clang-x64",
       "environments": [
@@ -27,7 +29,7 @@
       ],
       "compilers": {
         "cpp": {
-          "path": "${env.COMPILER_ROOT}\\clang-cl.exe"
+          "path": "${env.COMPILER_ROOT}\\clang++.exe"
         }
       }
     }
