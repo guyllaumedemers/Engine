@@ -1,0 +1,35 @@
+{
+  "configurations": [
+    {
+      "inheritEnvironments": [
+        "clang-cl"
+      ],
+      "name": "Win32-Debug",
+      "includePath": [
+        "${workspaceRoot}\\engine\\source\\**",
+        "${env.MVS_INCLUDES}\\**"
+
+      ],
+      "defines": [
+        "_DEBUG"
+      ],
+      "intelliSenseMode": "windows-clang-x64",
+      "environments": [
+        {
+          "COMPILER_ROOT": "C:\\Program Files\\LLVM\\bin",
+          "MVS_ROOT": "C:\\Program Files\\Microsoft Visual Studio",
+          "MVS_YEAR": "2022",
+          "MVS_LICENSING": "Enterprise",
+          "MVS_VERSION_NUMBER": "14.38.33130",
+          "MVS_INCLUDES": "${env.MVS_ROOT}\\${env.MVS_YEAR}\\${env.MVS_LICENSING}\\VC\\Tools\\MSVC\\${env.MVS_VERSION_NUMBER}\\include",
+          "environment": "clang++"
+        }
+      ],
+      "compilers": {
+        "cpp": {
+          "path": "${env.COMPILER_ROOT}\\clang-cl.exe"
+        }
+      }
+    }
+  ]
+}
