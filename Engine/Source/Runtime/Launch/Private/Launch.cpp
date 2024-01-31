@@ -18,51 +18,59 @@
 //OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 //SOFTWARE.
 
-#include "../../Core/Public/CoreMinimal.h"
-#include "../../Core/Public/Misc/CoreGlobals.h"
+// fwd _decl
+extern void BeginExitRequest();
+extern bool IsEngineExitRequested();
 
-extern int32_t EnginePreInit() {
+namespace
+{
+	inline static int GErrorLevel = 0;
 
-	int32_t ErrorLevel = 0;
-	// load required library
+	static int EnginePreInit() {
 
-	return ErrorLevel;
+		// load required library
+
+		if (GErrorLevel < 0)
+		{
+			BeginExitRequest();
+		}
+
+		return GErrorLevel;
+	}
+
+	static int EngineInit() {
+
+		// create a window application
+		return GErrorLevel;
+	}
+
+	static void EngineTick() {
+
+		// tick engine
+
+	}
+
+	static void EnginePreExit() {
+
+		// flush resources, subsystems, etc...
+
+	}
+
+	static void EngineExit() {
+
+		// close libraries
+
+	}
 }
 
-extern int32_t EngineInit() {
-
-	int32_t ErrorLevel = 0;
-	// create a window application
-
-	return ErrorLevel;
-}
-
-extern void EngineTick() {
-
-	// tick engine
-
-}
-
-extern void EnginePreExit() {
-
-	// flush resources, subsystems, etc...
-
-}
-
-extern void EngineExit() {
-
-	// close libraries
-
-}
-
-// cross-platform entry point to engine startup
-int32_t GuardedMain() {
+// impl engine main
+int GuardedMain() {
 
 	// handle library loading for engine
-	int32_t ErrorLevel = EnginePreInit();
+	GErrorLevel = EnginePreInit();
 
 	// handle system initialization
-	ErrorLevel = EngineInit();
+	GErrorLevel = EngineInit();
 
 	// TODO @gdemers 2024-01-09 Inspect Error level and react properly to value - Check level meaning online
 
@@ -79,5 +87,5 @@ int32_t GuardedMain() {
 	// handle releasing library modules, dll
 	EngineExit();
 
-	return ErrorLevel;
-};
+	return GErrorLevel;
+}

@@ -35,10 +35,11 @@ FOR /f usebackq %%i in (`DIR /ad /b %~dp0 ^| FINDSTR /v /i ThirdParty`) do (
 	POPD
 )
 
-SET assembly=engine
-SET compilerFlags=-g -shared -Wall -Werror -std=c++17
-SET includeFlags=-IRuntime
-SET defines=-D_DEBUG -DENGINE_BUILD_DLL -D_CRT_SECURE_NO_WARNINGS
+SET assembly=Engine
+SET compilerFlags=/std:c++17 /Ob1 /Y- /Zi /Wall /showFilenames
+SET includeFlags=/IRuntime
+SET linkerFlags=/MACHINE:X64 /DEBUG /DLL /NOENTRY /VERBOSE:LIB
+SET defines=/D_DEBUG /DDCLSPEC_EXPORT /D_CRT_SECURE_NO_WARNINGS
 
-ECHO "Building %assembly%"
-clang++ %cppFilenames% %compilerFlags% -o ..\\out\\%assembly%.dll %defines% %includeFlags%
+ECHO "Building %assembly%..."
+clang-cl %defines% %includeFlags% %compilerFlags% %cppFilenames% -o ..\\out\\%assembly%.dll /link %linkerFlags%

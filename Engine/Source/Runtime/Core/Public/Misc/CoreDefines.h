@@ -20,16 +20,19 @@
 
 #pragma once
 
-// TODO @gdemers 2024-01-09 Remove once build files are generated
-#define ENGINE_PLATFORM_WINDOWS
+#if defined(_WIN32) || defined(__WIN32__) || defined(WIN32)
 
-// compiler flag for platform specific check
-#ifdef ENGINE_PLATFORM_WINDOWS
-	// additional flag pass to dll build process
-	#ifdef ENGINE_BUILD_DLL
-		#define ENGINE_API __declspec(dllexport)
-	#else
-	// no present in executable build process
-		#define ENGINE_API __declspec(dllimport)	
+	// create macro for caching platform target
+	#ifndef TARGET_SDK_WINDOW_PLATFORM
+	#define TARGET_SDK_WINDOW_PLATFORM
 	#endif
+
+	#if defined(DCLSPEC_EXPORT)
+	#define ENGINE_API __declspec(dllexport)
+	#else
+	#define ENGINE_API __declspec(dllimport)	
+	#endif
+
+#else
+	#error "Platform currently not supported! Only Windows x64 can run the following project." 
 #endif

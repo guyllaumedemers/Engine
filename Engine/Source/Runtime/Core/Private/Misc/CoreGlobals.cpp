@@ -18,11 +18,19 @@
 //OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 //SOFTWARE.
 
-#pragma once
+namespace
+{
+	inline static bool bIsRequestingExit = false;
+}
 
-// An GAME class that provide api calls to visualize Entity objects. Provides visualization
-// feedback throught ImGUI and allow control on 'Testing' game content.
-class FImGUIEntityVisualizer {
+void BeginExitRequest() {
 
-	// TODO @gdemers 2024-01-07 Define content on the Visualizer Tool
-};
+	// TODO @gdemers 2024-01-27 Add proper request handling
+	bIsRequestingExit = true;
+}
+
+bool IsEngineExitRequested() {
+
+	return bIsRequestingExit;
+}
+

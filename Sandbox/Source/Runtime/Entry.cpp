@@ -18,26 +18,28 @@
 //OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 //SOFTWARE.
 
-#pragma once
+#include <Core/Public/Misc/CoreDefines.h>
 
-#include "../../Core/CoreMinimal.h"
+#if defined(TARGET_SDK_WINDOW_PLATFORM)
 
-struct FEntityData;
+#include <Windows.h>
 
-// An ENGINE class that provide api calls to Create, Read, Update and Destroy
-// Entities Object (C.R.U.D). 
-class FEntityManager {
-public:
-	// TODO @gdemers 2024-01-07 Update function signature to reflect actual requirements for CRUD api (placeholder for now)
-	static uint32_t Create();
-	static FEntityData const& Read(uint32_t Id);
-	static void Update(uint32_t Id);
-	static bool Destroy(uint32_t Id);
+#include <stdio.h>
 
-protected:
-	static TUniquePtr<FEntityManager>& Get();
+// fwd _decl
+extern ENGINE_API int  LaunchWindowStartup();
+extern ENGINE_API void LaunchWindowShutdown();
 
-private:
-	inline static TUniquePtr<FEntityManager> Singleton = nullptr;
-	TMap<uint32_t, FEntityData> Entities;
-};
+// TODO @gdemers 2024-01-27 WinMain should exist under LaunchWindow.cpp according to Unreal
+// standard. However, compilation of the Sandbox executable require a Main to be accessible
+// to compile, link. Figure out how their C# build tool handle that - See: UEToolchain.cs and more.
+int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, PSTR lpCmdLine, int nCmdShow) {
+
+	puts("HelloWorld!");
+	/*const int bErrorLevel = LaunchWindowStartup();
+	LaunchWindowShutdown();
+	return bErrorLevel;*/
+	return 0;
+}
+
+#endif

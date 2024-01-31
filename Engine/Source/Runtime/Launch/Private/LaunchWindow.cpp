@@ -18,16 +18,17 @@
 //OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 //SOFTWARE.
 
-#include "../../Core/Public/CoreMinimal.h"
+#include "Core/Public/Misc/CoreDefines.h"
 
-#ifdef ENGINE_PLATFORM_WINDOWS
+#if defined(TARGET_SDK_WINDOW_PLATFORM)
 
-extern int32_t GuardedMain();
+// fwd _decl
+extern int GuardedMain();
 
 // platform specific impl
-extern int32_t LaunchWindowStartup() {
+int ENGINE_API LaunchWindowStartup() {
 
-	int32_t ErrorLevel = 0;
+	int ErrorLevel = 0;
 
 	// TODO @gdemers 2024-01-09 "Window specific system" - not getting into that
 
@@ -37,17 +38,9 @@ extern int32_t LaunchWindowStartup() {
 	return ErrorLevel;
 }
 
-extern void LaunchWindowShutdown() {
+void ENGINE_API LaunchWindowShutdown() {
 
 
 }
-
-// executable entry point
-int main(int argc, char* argv[]) {
-
-	const int32_t bErrorLevel = LaunchWindowStartup();
-	LaunchWindowShutdown();
-	return bErrorLevel;
-};
 
 #endif

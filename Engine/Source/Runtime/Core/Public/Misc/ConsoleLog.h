@@ -20,7 +20,7 @@
 
 #pragma once
 
-inline void PrintConsole(char const* Fmt, ...) {
+void PrintConsole(char const* Fmt, ...) {
 
 	// TODO @gdemers 2024-01-09 Create impl for a console logger, use external lib
 	// and wrap impl details
