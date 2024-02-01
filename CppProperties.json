@@ -1,20 +1,16 @@
 {
   "configurations": [
     {
-      "inheritEnvironments": [
-        "clang-cl"
-      ],
-      "name": "Engine-Win32-Debug",
-      "includePath": [
-        "${workspaceRoot}\\Engine\\Source\\**",
-        "${env.WIN32_INCLUDES}\\**"
-      ],
+      "compilers": {
+        "cpp": {
+          "path": "${env.COMPILER_ROOT}\\clang-cl.exe"
+        }
+      },
       "defines": [
         "WIN32",
         "DCLSPEC_EXPORT",
         "TARGET_SDK_WINDOW_PLATFORM"
       ],
-      "intelliSenseMode": "windows-clang-x64",
       "environments": [
         {
           "COMPILER_ROOT": "C:\\Program Files\\LLVM\\bin",
@@ -25,11 +21,15 @@
           "environment": "clang-cl"
         }
       ],
-      "compilers": {
-        "cpp": {
-          "path": "${env.COMPILER_ROOT}\\clang-cl.exe"
-        }
-      }
+      "includePath": [
+        "${workspaceRoot}\\Engine\\Source\\**",
+        "${env.WIN32_INCLUDES}\\**"
+      ],
+      "inheritEnvironments": [
+        "clang-cl"
+      ],
+      "intelliSenseMode": "windows-clang-x64",
+      "name": "Engine-Win32-Debug"
     }
   ]
 }

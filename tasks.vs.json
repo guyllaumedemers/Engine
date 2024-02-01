@@ -2,20 +2,20 @@
   "version": "0.0.1",
   "tasks": [
     {
-      "workingDirectory": "${workspaceRoot}/Engine/Source",
-      "taskLabel": "Build Engine dll",
       "appliesTo": "Engine/Source/build.bat",
+      "command": ".\\build.bat",
       "contextType": "custom",
+      "taskLabel": "Build Engine dll",
       "type": "launch",
-      "command": ".\\build.bat"
+      "workingDirectory": "${workspaceRoot}/Engine/Source"
     },
     {
-      "workingDirectory": "${workspaceRoot}/Sandbox/Source",
-      "taskLabel": "Build Sandbox executable",
       "appliesTo": "Sandbox/Source/build.bat",
+      "command": ".\\build.bat",
       "contextType": "custom",
+      "taskLabel": "Build Sandbox executable",
       "type": "launch",
-      "command": ".\\build.bat"
+      "workingDirectory": "${workspaceRoot}/Sandbox/Source"
     }
   ]
 }
