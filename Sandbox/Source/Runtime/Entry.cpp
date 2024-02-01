@@ -24,8 +24,6 @@
 
 #include <Windows.h>
 
-#include <stdio.h>
-
 // fwd _decl
 extern ENGINE_API int  LaunchWindowStartup();
 extern ENGINE_API void LaunchWindowShutdown();
@@ -35,11 +33,9 @@ extern ENGINE_API void LaunchWindowShutdown();
 // to compile, link. Figure out how their C# build tool handle that - See: UEToolchain.cs and more.
 int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, PSTR lpCmdLine, int nCmdShow) {
 
-	puts("HelloWorld!");
-	/*const int bErrorLevel = LaunchWindowStartup();
+	const int bErrorlevel = LaunchWindowStartup();
 	LaunchWindowShutdown();
-	return bErrorLevel;*/
-	return 0;
+	return bErrorlevel;
 }
 
 #endif

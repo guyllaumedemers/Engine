@@ -18,11 +18,6 @@
       "environments": [
         {
           "COMPILER_ROOT": "C:\\Program Files\\LLVM\\bin",
-          "MVS_ROOT": "C:\\Program Files\\Microsoft Visual Studio",
-          "MVS_YEAR": "2022",
-          "MVS_LICENSING": "Enterprise",
-          "MVS_VERSION_NUMBER": "14.38.33130",
-          "MVS_INCLUDES": "${env.MVS_ROOT}\\${env.MVS_YEAR}\\${env.MVS_LICENSING}\\VC\\Tools\\MSVC\\${env.MVS_VERSION_NUMBER}\\include",
           "WIN32_ROOT": "C:\\Program Files (x86)\\Windows Kits",
           "WIN32_OS_VERSION": "10",
           "WIN32_VERSION_NUMBER": "10.0.22621.0",

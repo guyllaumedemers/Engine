@@ -42,4 +42,4 @@ SET linkerFlags=/MACHINE:X64 /DEBUG /DLL /NOENTRY /VERBOSE:LIB
 SET defines=/D_DEBUG /DDCLSPEC_EXPORT /D_CRT_SECURE_NO_WARNINGS
 
 ECHO "Building %assembly%..."
-clang-cl %defines% %includeFlags% %compilerFlags% %cppFilenames% -o ..\\out\\%assembly%.dll /link %linkerFlags%
+clang-cl %defines% %includeFlags% %compilerFlags% %cppFilenames% -o ..\\..\\out\\%assembly%.dll /link %linkerFlags%
