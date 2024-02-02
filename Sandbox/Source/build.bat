@@ -23,8 +23,8 @@ SET windowCrt="C:\\Program Files (x86)\\Windows Kits\\10\\Lib\\10.0.22621.0\\ucr
 SET assembly=Sandbox
 SET compilerFlags=/std:c++17 /Ob1 /Y- /Zi /Wall /showFilenames /MDd --target=x86_64-pc-windows-msvc
 SET includeFlags=/I..\\..\\Engine\\Source\\Runtime
-SET linkerLibs=Engine.lib ucrt.lib
-SET linkerFlags=/MACHINE:X64 /SUBSYSTEM:CONSOLE /DEBUG /VERBOSE
+SET linkerLibs=Engine.lib msvcrtd.lib vcruntimed.lib ucrtd.lib
+SET linkerFlags=/MACHINE:X64 /SUBSYSTEM:WINDOWS /DEBUG /VERBOSE
 SET linkerPaths=/LIBPATH:%engineDir% /LIBPATH:%msvcDir% /LIBPATH:%windowKitDir% /LIBPATH:%windowCrt%
 SET defines=/D_DEBUG /D_CRT_SECURE_NO_WARNINGS
 
@@ -32,4 +32,4 @@ SET defines=/D_DEBUG /D_CRT_SECURE_NO_WARNINGS
 :: ECHO %LIB%
 
 ECHO "Building %assembly%..."
-clang-cl %defines% %includeFlags% %compilerFlags% %cppFilenames% -o ..\\..\\out\\%assembly%.exe /link %linkerLibs% %linkerPaths% %linkerFlags% /entry:WinMain
+clang-cl %defines% %includeFlags% %compilerFlags% %cppFilenames% -o ..\\..\\out\\%assembly%.exe /link %linkerLibs% %linkerPaths% %linkerFlags%
