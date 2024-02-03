@@ -22,4 +22,4 @@ In this [guide](https://sparen.github.io/ph3tutorials/ddsga2.html), we will disc
 
 ### Platform layer
 
-![platform_layer](https://github.com/guyllaumedemers/Opengl-Danmaku/Resources/OS_architecture.png)
+![platform_layer](https://github.com/guyllaumedemers/Opengl-Danmaku/blob/master/Resources/OS_architecture.png)
