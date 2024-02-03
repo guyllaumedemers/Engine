@@ -14,36 +14,12 @@ Be aware that this project isn't about building a `Game Engine`, explaining `Bui
 
 ## JIRA
 
-**Notes** : Initial step of this project will be to setup the Root for building a single `Entity`, that can be configure from `ImGui` tooling. 
-
-Build system
-
-- [ ] CONFIGURE project Build system through CMake.
-
-Engine
-
-- [x] ADD ImGui submodule
-- [x] ADD GLFW submodule
-- [x] ADD Glew submodule
-- [x] ADD GTEST submodule
-
-- [ ] CONFIGURE basic ENGINE hierarchy.
-- [ ] CREATE Core Engine loop
-
-- [ ] CREATE an EntityManager SYSTEM.
-- [ ] CREATE an Entity OBJECT.
-- [ ] CREATE a Pooling SYSTEM.
-- [ ] CREATE a Poolable INTERFACE.
-
-Game
-
-- [ ] CONFIGURE basic GAME hierarchy.
-
-Tooling
-
-- [ ] CREATE an ImGUI Visualizer SYSTEM.
-- [ ] ADD functionality to Visualizer so we can parametrize our Entity Movement behaviour
+// TODO
 
 ### Danmaku
 
-In this [guide](https://sparen.github.io/ph3tutorials/ddsga2.html), we will discuss the role angles play in bullet movement as well as how bullet graphic choice affects the aesthetics of a pattern, as well as how Bullet Hell games differ from other shmups. 
+In this [guide](https://sparen.github.io/ph3tutorials/ddsga2.html), we will discuss the role angles play in bullet movement as well as how bullet graphic choice affects the aesthetics of a pattern, as well as how Bullet Hell games differ from other shmups.
+
+### Platform layer
+
+![platform_layer](https://github.com/guyllaumedemers/Opengl-Danmaku/Resources/OS_architecture.png)
