@@ -20,12 +20,12 @@
 
 #include <Core/Public/Misc/CoreDefines.h>
 
-#if defined(TARGET_SDK_WINDOW_PLATFORM)
+#ifdef PLATFORM_WINDOWS
 
 #include <Windows.h>
 
 // fwd _decl
-extern ENGINE_API int  LaunchWindowStartup();
+extern ENGINE_API int  LaunchWindowStartup(HINSTANCE hInstance, HINSTANCE hPrevInstance, PSTR lpCmdLine, int nCmdShow);
 extern ENGINE_API void LaunchWindowShutdown();
 
 // TODO @gdemers 2024-01-27 WinMain should exist under LaunchWindow.cpp according to Unreal
@@ -33,7 +33,7 @@ extern ENGINE_API void LaunchWindowShutdown();
 // to compile, link. Figure out how their C# build tool handle that - See: UEToolchain.cs and more.
 int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, PSTR lpCmdLine, int nCmdShow) {
 
-	const int bErrorlevel = LaunchWindowStartup();
+	const int bErrorlevel = LaunchWindowStartup(hInstance, hPrevInstance, lpCmdLine, nCmdShow);
 	LaunchWindowShutdown();
 	return bErrorlevel;
 }

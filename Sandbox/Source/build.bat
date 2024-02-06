@@ -23,7 +23,7 @@ SET windowCrt="C:\\Program Files (x86)\\Windows Kits\\10\\Lib\\10.0.22621.0\\ucr
 SET assembly=Sandbox
 SET compilerFlags=/std:c++17 /Ob1 /Y- /Zi /Wall /showFilenames /MDd --target=x86_64-pc-windows-msvc
 SET includeFlags=/I..\\..\\Engine\\Source\\Runtime
-SET linkerLibs=Engine.lib msvcrtd.lib vcruntimed.lib ucrtd.lib kernel32.lib
+SET linkerLibs=Engine.lib msvcrtd.lib vcruntimed.lib ucrtd.lib kernel32.lib msvcprtd.lib
 SET linkerFlags=/MACHINE:X64 /SUBSYSTEM:WINDOWS /NODEFAULTLIB /DEBUG /VERBOSE
 SET linkerPaths=/LIBPATH:%engineDir% /LIBPATH:%msvcDir% /LIBPATH:%windowKitDir% /LIBPATH:%windowCrt%
 SET defines=/D_DEBUG /D_CRT_SECURE_NO_WARNINGS

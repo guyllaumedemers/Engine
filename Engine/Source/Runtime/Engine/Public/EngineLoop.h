@@ -20,23 +20,15 @@
 
 #pragma once
 
-#if defined(_WIN32) || defined(__WIN32__) || defined(WIN32)
+/**
+ *	Engine. Context Object. Handle engine lifetime.
+ */
+class FEngineLoop {
 
-	// create macro for caching platform target
-	#ifndef PLATFORM_WINDOWS
-	#define PLATFORM_WINDOWS
-	#endif
-
-	#ifndef UNICODE
-	#define UNICODE
-	#endif
-
-	#if defined(DCLSPEC_EXPORT)
-	#define ENGINE_API __declspec(dllexport)
-	#else
-	#define ENGINE_API __declspec(dllimport)	
-	#endif
-
-#else
-	#error "Platform currently not supported! Only Windows x64 can run the following project." 
-#endif
+public:
+	int		PreInit();
+	int		Init();
+	void	Tick();
+	void	PreExit();
+	void	Exit();
+};

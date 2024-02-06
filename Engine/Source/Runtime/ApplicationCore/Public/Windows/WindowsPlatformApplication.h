@@ -20,23 +20,25 @@
 
 #pragma once
 
-#if defined(_WIN32) || defined(__WIN32__) || defined(WIN32)
+#include "ApplicationCore/Public/GenericPlatformApplication.h"
 
-	// create macro for caching platform target
-	#ifndef PLATFORM_WINDOWS
-	#define PLATFORM_WINDOWS
-	#endif
+/**
+ *	Platform Application. Handle Windows 'Window' creation.
+ */
+class FWindowsPlatformApplication : public FGenericPlatformApplication {
 
-	#ifndef UNICODE
-	#define UNICODE
-	#endif
+public:
+	FWindowsPlatformApplication();
+	static	TSharedPtr<FGenericPlatformApplication> CreatePlatformApplication();
+	virtual TSharedPtr<FGenericWindow>				MakeWindow() const override;
+	virtual	void									SetupWindowContext(TSharedPtr<FGenericWindow> InWindow, FGenericWindowDefinition const& InDefinition) override;
+};
 
-	#if defined(DCLSPEC_EXPORT)
-	#define ENGINE_API __declspec(dllexport)
-	#else
-	#define ENGINE_API __declspec(dllimport)	
-	#endif
+/**
+ *	Symbol #define. Abstract Platform type (Window, Linux, Mac) from user.
+ */
+#include "Core/Public/Misc/CoreDefines.h"
 
-#else
-	#error "Platform currently not supported! Only Windows x64 can run the following project." 
+#ifdef PLATFORM_WINDOWS
+typedef FWindowsPlatformApplication FPlatformApplication;
 #endif

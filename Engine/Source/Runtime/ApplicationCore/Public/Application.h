@@ -20,23 +20,32 @@
 
 #pragma once
 
-#if defined(_WIN32) || defined(__WIN32__) || defined(WIN32)
+#include "Core/Public/CoreMinimal.h"
 
-	// create macro for caching platform target
-	#ifndef PLATFORM_WINDOWS
-	#define PLATFORM_WINDOWS
-	#endif
+// fwd decl
+class FGenericPlatformApplication;
 
-	#ifndef UNICODE
-	#define UNICODE
-	#endif
+/**
+ *	Core Application. Handle the creation context for the 'Window' Application and
+ *	interface with platform abstraction layer.
+ */
+class FApplication {
 
-	#if defined(DCLSPEC_EXPORT)
-	#define ENGINE_API __declspec(dllexport)
-	#else
-	#define ENGINE_API __declspec(dllimport)	
-	#endif
+public:
+	FApplication() = default;
+	FApplication(const FApplication&) = delete;
+	FApplication(FApplication&&) = delete;
+	FApplication& operator=(const FApplication&) = delete;
+	FApplication& operator=(FApplication&&) = delete;
 
-#else
-	#error "Platform currently not supported! Only Windows x64 can run the following project." 
-#endif
+	// TODO @gdemers 2024-02-04 Provide impl for SharedRef. Require being safe noexcept ?
+	static FApplication&	Get() { return (*Application); }
+	static void				Create();
+	void					MakeWindow();
+
+private:
+	static void				Create(TSharedPtr<FGenericPlatformApplication> InPlatform);
+
+	TSharedPtr<FGenericPlatformApplication> Platform;
+	static TSharedPtr<FApplication>			Application;
+};

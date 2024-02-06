@@ -18,10 +18,11 @@
 //OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 //SOFTWARE.
 
-namespace
-{
-	inline static bool bIsRequestingExit = false;
-}
+#include "Engine/Public/EngineLoop.h"
+
+// g_var
+bool			bIsRequestingExit = false;
+FEngineLoop		GEngineLoop;
 
 void BeginExitRequest() {
 

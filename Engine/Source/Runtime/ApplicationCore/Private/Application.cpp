@@ -18,25 +18,32 @@
 //OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 //SOFTWARE.
 
-#pragma once
+#include "ApplicationCore/Public/Application.h"
 
-#if defined(_WIN32) || defined(__WIN32__) || defined(WIN32)
+#include "Core/Public/Misc/CoreDefines.h"
 
-	// create macro for caching platform target
-	#ifndef PLATFORM_WINDOWS
-	#define PLATFORM_WINDOWS
-	#endif
-
-	#ifndef UNICODE
-	#define UNICODE
-	#endif
-
-	#if defined(DCLSPEC_EXPORT)
-	#define ENGINE_API __declspec(dllexport)
-	#else
-	#define ENGINE_API __declspec(dllimport)	
-	#endif
-
-#else
-	#error "Platform currently not supported! Only Windows x64 can run the following project." 
+#ifdef PLATFORM_WINDOWS
+#include "ApplicationCore/Public/Windows/WindowsPlatformApplication.h"
 #endif
+
+// g_var
+TSharedPtr<FApplication> FApplication::Application = nullptr;
+
+void FApplication::Create()
+{
+	Create(FPlatformApplication::CreatePlatformApplication());
+}
+
+void FApplication::Create(TSharedPtr<FGenericPlatformApplication> InPlatform)
+{
+	// setup application context
+	Application				= MakeShared<FApplication>();
+	Application->Platform	= InPlatform;
+}
+
+void FApplication::MakeWindow()
+{
+	// setup window context
+	TSharedPtr<FGenericWindow> MainWindow = Platform->MakeWindow();
+	Platform->SetupWindowContext(MainWindow, {});
+}

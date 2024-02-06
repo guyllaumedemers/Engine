@@ -20,23 +20,16 @@
 
 #pragma once
 
-#if defined(_WIN32) || defined(__WIN32__) || defined(WIN32)
+// fwd decl
+struct FGenericWindowDefinition;
 
-	// create macro for caching platform target
-	#ifndef PLATFORM_WINDOWS
-	#define PLATFORM_WINDOWS
-	#endif
+/**
+ *	Abstraction. Context Object. Define a 'Window' for unknown an platform.
+ */
+class FGenericWindow {
 
-	#ifndef UNICODE
-	#define UNICODE
-	#endif
+public:
+	virtual ~FGenericWindow() = default;
 
-	#if defined(DCLSPEC_EXPORT)
-	#define ENGINE_API __declspec(dllexport)
-	#else
-	#define ENGINE_API __declspec(dllimport)	
-	#endif
-
-#else
-	#error "Platform currently not supported! Only Windows x64 can run the following project." 
-#endif
+	virtual void Setup(FGenericWindowDefinition const& InDefinition) {}
+};

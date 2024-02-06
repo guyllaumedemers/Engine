@@ -8,22 +8,28 @@
       },
       "defines": [
         "WIN32",
-        "DCLSPEC_EXPORT",
-        "TARGET_SDK_WINDOW_PLATFORM"
+        "PLATFORM_WINDOWS",
+        "DCLSPEC_EXPORT"
       ],
       "environments": [
         {
           "COMPILER_ROOT": "C:\\Program Files\\LLVM\\bin",
-          "WIN32_ROOT": "C:\\Program Files (x86)\\Windows Kits",
-          "WIN32_OS_VERSION": "10",
-          "WIN32_VERSION_NUMBER": "10.0.22621.0",
+          "environment": "clang-cl",
+          "MVS_INCLUDES": "${env.MVS_ROOT}\\${env.MVS_YEAR}\\${env.MVS_LICENSING}\\VC\\Tools\\MSVC\\${env.MVS_VERSION_NUMBER}\\include",
+          "MVS_LICENSING": "Enterprise",
+          "MVS_ROOT": "C:\\Program Files\\Microsoft Visual Studio",
+          "MVS_VERSION_NUMBER": "14.38.33130",
+          "MVS_YEAR": "2022",
           "WIN32_INCLUDES": "${env.WIN32_ROOT}\\${env.WIN32_OS_VERSION}\\Include\\${env.WIN32_VERSION_NUMBER}",
-          "environment": "clang-cl"
+          "WIN32_OS_VERSION": "10",
+          "WIN32_ROOT": "C:\\Program Files (x86)\\Windows Kits",
+          "WIN32_VERSION_NUMBER": "10.0.22621.0"
         }
       ],
       "includePath": [
         "${workspaceRoot}\\Engine\\Source\\**",
-        "${env.WIN32_INCLUDES}\\**"
+        "${env.WIN32_INCLUDES}\\**",
+        "${env.MVS_INCLUDES}\\**"
       ],
       "inheritEnvironments": [
         "clang-cl"

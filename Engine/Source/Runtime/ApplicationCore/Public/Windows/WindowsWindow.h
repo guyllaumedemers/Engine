@@ -20,23 +20,19 @@
 
 #pragma once
 
-#if defined(_WIN32) || defined(__WIN32__) || defined(WIN32)
+#include "ApplicationCore/Public/GenericWindow.h"
 
-	// create macro for caching platform target
-	#ifndef PLATFORM_WINDOWS
-	#define PLATFORM_WINDOWS
-	#endif
+/**
+ *	Context Object. Define a 'Window' context for the Windows platform.
+ */
+class FWindowsWindow : public FGenericWindow {
 
-	#ifndef UNICODE
-	#define UNICODE
-	#endif
+public:
+	FWindowsWindow() = default;
+	FWindowsWindow(const FWindowsWindow&) = delete;
+	FWindowsWindow(FWindowsWindow&&) = default;
+	FWindowsWindow& operator=(const FWindowsWindow&) = delete;
+	FWindowsWindow& operator=(FWindowsWindow&&) = default;
 
-	#if defined(DCLSPEC_EXPORT)
-	#define ENGINE_API __declspec(dllexport)
-	#else
-	#define ENGINE_API __declspec(dllimport)	
-	#endif
-
-#else
-	#error "Platform currently not supported! Only Windows x64 can run the following project." 
-#endif
+	virtual void Setup(FGenericWindowDefinition const& InDefinition) override;
+};

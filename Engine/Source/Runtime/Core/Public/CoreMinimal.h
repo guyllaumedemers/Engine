@@ -52,3 +52,4 @@ TSharedPtr<T> MakeShared(Args&&... args) {
 
 template<typename T>
 using TWeakPtr = std::weak_ptr<T>;
+

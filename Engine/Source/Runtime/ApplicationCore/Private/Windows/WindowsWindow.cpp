@@ -18,25 +18,40 @@
 //OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 //SOFTWARE.
 
-#pragma once
+#include "ApplicationCore/Public/Windows/WindowsWindow.h"
 
-#if defined(_WIN32) || defined(__WIN32__) || defined(WIN32)
+#include "Core/Public/Misc/CoreDefines.h"
 
-	// create macro for caching platform target
-	#ifndef PLATFORM_WINDOWS
-	#define PLATFORM_WINDOWS
-	#endif
+#ifdef PLATFORM_WINDOWS
 
-	#ifndef UNICODE
-	#define UNICODE
-	#endif
+#include <Windows.h>
 
-	#if defined(DCLSPEC_EXPORT)
-	#define ENGINE_API __declspec(dllexport)
-	#else
-	#define ENGINE_API __declspec(dllimport)	
-	#endif
+void FWindowsWindow::Setup(FGenericWindowDefinition const& InDefinition)
+{
+	// TODO @gdemers 2024-02-05 Complete Window Creation using win32 api
+	LPCWSTR WindowClassName = L"";
+	LPCWSTR WindowName = L"";
+	DWORD Style = 0;
+	int X = 0;
+	int Y = 0;
+	int Width = 0;
+	int Height = 0;
+	HWND Parent = nullptr;
+	HMENU Menu = nullptr;
+	HINSTANCE Instance = nullptr;
+	LPVOID Param = nullptr;
 
-#else
-	#error "Platform currently not supported! Only Windows x64 can run the following project." 
+	HWND HWindow = CreateWindow(
+		WindowClassName,
+		WindowName,
+		Style,
+		X, Y,
+		Width, Height,
+		Parent,
+		Menu,
+		Instance,
+		Param
+	);
+}
+
 #endif

@@ -20,23 +20,35 @@
 
 #pragma once
 
-#if defined(_WIN32) || defined(__WIN32__) || defined(WIN32)
+#include "Core/Public/CoreMinimal.h"
 
-	// create macro for caching platform target
-	#ifndef PLATFORM_WINDOWS
-	#define PLATFORM_WINDOWS
-	#endif
+// fwd decl
+class	FGenericWindow;
+struct	FGenericWindowDefinition;
 
-	#ifndef UNICODE
-	#define UNICODE
-	#endif
+/**
+ *	Abstraction. Platform Application. Handle Creation Context for a 'Window' Application and platform messaging.
+ */
+class FGenericPlatformApplication {
 
-	#if defined(DCLSPEC_EXPORT)
-	#define ENGINE_API __declspec(dllexport)
-	#else
-	#define ENGINE_API __declspec(dllimport)	
-	#endif
+public:
+	virtual ~FGenericPlatformApplication() = default;
 
-#else
-	#error "Platform currently not supported! Only Windows x64 can run the following project." 
-#endif
+	static	TSharedPtr<FGenericPlatformApplication>		CreatePlatformApplication();
+	virtual TSharedPtr<FGenericWindow>					MakeWindow() const { return nullptr; }
+	virtual void										SetupWindowContext(TSharedPtr<FGenericWindow> InWindow, FGenericWindowDefinition const& InDefinition) {}
+
+protected:
+	TSet<TSharedPtr<FGenericWindow>>	Windows;
+};
+
+/**
+ *	POD. Represent 'Window' context data. platform independent.
+ */
+struct FGenericWindowDefinition
+{
+	float PosX = 0.f;
+	float PosY = 0.f;
+	float Width = 0.f;
+	float Height = 0.f;
+};

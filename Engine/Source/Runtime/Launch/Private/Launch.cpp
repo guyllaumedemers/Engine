@@ -18,47 +18,46 @@
 //OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 //SOFTWARE.
 
-// fwd _decl
-extern void BeginExitRequest();
-extern bool IsEngineExitRequested();
+#include "Engine/Public/EngineLoop.h"
+
+// g_func
+extern bool			IsEngineExitRequested();
+extern void			BeginExitRequest();
+
+// g_var
+extern FEngineLoop	GEngineLoop;
 
 namespace
 {
-	inline static int GErrorLevel = 0;
-
 	static int EnginePreInit() {
 
-		// load required library
+		const int ErrorLevel = GEngineLoop.PreInit();
 
-		if (GErrorLevel < 0)
-		{
-			BeginExitRequest();
-		}
-
-		return GErrorLevel;
+		return ErrorLevel;
 	}
 
 	static int EngineInit() {
 
-		// create a window application
-		return GErrorLevel;
+		const int ErrorLevel = GEngineLoop.Init();
+
+		return ErrorLevel;
 	}
 
 	static void EngineTick() {
 
-		// tick engine
+		GEngineLoop.Tick();
 
 	}
 
 	static void EnginePreExit() {
 
-		// flush resources, subsystems, etc...
+		GEngineLoop.PreExit();
 
 	}
 
 	static void EngineExit() {
 
-		// close libraries
+		GEngineLoop.Exit();
 
 	}
 }
@@ -66,13 +65,17 @@ namespace
 // impl engine main
 int GuardedMain() {
 
-	// handle library loading for engine
-	GErrorLevel = EnginePreInit();
+	// preinit platform setup
+	int ErrorLevel = EnginePreInit();
 
-	// handle system initialization
-	GErrorLevel = EngineInit();
+	// early exit for preinit failure
+	if (ErrorLevel < 0)
+	{
+		return ErrorLevel;
+	}
 
-	// TODO @gdemers 2024-01-09 Inspect Error level and react properly to value - Check level meaning online
+	// init platform and application
+	ErrorLevel = EngineInit();
 
 	// handle application loop
 	while (!IsEngineExitRequested()) {
@@ -87,5 +90,5 @@ int GuardedMain() {
 	// handle releasing library modules, dll
 	EngineExit();
 
-	return GErrorLevel;
+	return ErrorLevel;
 }

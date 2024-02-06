@@ -18,25 +18,34 @@
 //OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 //SOFTWARE.
 
-#pragma once
+#include "Engine/Public/EngineLoop.h"
 
-#if defined(_WIN32) || defined(__WIN32__) || defined(WIN32)
+#include "ApplicationCore/Public/Application.h"
 
-	// create macro for caching platform target
-	#ifndef PLATFORM_WINDOWS
-	#define PLATFORM_WINDOWS
-	#endif
+int FEngineLoop::PreInit()
+{
+	// create application context that configure platform details
+	FApplication::Create();
 
-	#ifndef UNICODE
-	#define UNICODE
-	#endif
+	return 0;
+}
 
-	#if defined(DCLSPEC_EXPORT)
-	#define ENGINE_API __declspec(dllexport)
-	#else
-	#define ENGINE_API __declspec(dllimport)	
-	#endif
+int FEngineLoop::Init()
+{
+	// create main 'window' context
+	FApplication::Get().MakeWindow();
 
-#else
-	#error "Platform currently not supported! Only Windows x64 can run the following project." 
-#endif
+	return 0;
+}
+
+void FEngineLoop::Tick()
+{
+}
+
+void FEngineLoop::PreExit()
+{
+}
+
+void FEngineLoop::Exit()
+{
+}

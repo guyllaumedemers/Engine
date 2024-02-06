@@ -20,17 +20,24 @@
 
 #include "Core/Public/Misc/CoreDefines.h"
 
-#if defined(TARGET_SDK_WINDOW_PLATFORM)
+#ifdef PLATFORM_WINDOWS
 
-// fwd _decl
+#include <Windows.h>
+
+#include <stdio.h>
+
+// g_var
+HINSTANCE HInstance = nullptr;
+
+// g_func
 extern int GuardedMain();
 
 // platform specific impl
-int ENGINE_API LaunchWindowStartup() {
+int ENGINE_API LaunchWindowStartup(HINSTANCE hInstance, HINSTANCE hPrevInstance, PSTR lpCmdLine, int nCmdShow) {
 
 	int ErrorLevel = 0;
 
-	// TODO @gdemers 2024-01-09 "Window specific system" - not getting into that
+	HInstance = hInstance;
 
 	// call cross-platform 'main' that startup the engine
 	ErrorLevel = GuardedMain();
