@@ -25,6 +25,7 @@
 #include <Windows.h>
 
 #include "ApplicationCore/Public/Windows/WindowsWindow.h"
+#include "Core/Public/CoreMinimal.h"
 
 // g_var
 extern HINSTANCE	HInstance;
@@ -33,12 +34,13 @@ extern WCHAR		EngineClass[];
 // global_func
 static LRESULT CALLBACK WindowProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 {
-
 	//// TODO @gdemers handle message pump by operating system
 	switch (uMsg)
 	{
-	case WM_SIZE:
-		// Handle window resizing
+	case WM_CREATE:
+		{
+			CONSOLE_LOG("Window Creation Success!");
+		}
 		break;
 	default:
 		break;
@@ -50,7 +52,7 @@ static LRESULT CALLBACK WindowProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM l
 FWindowsPlatformApplication::FWindowsPlatformApplication()
 {
 	// TODO @gdemers 2024-02-07 Add support for Cursor and Application Icon
-	WNDCLASS WindowClass;
+	WNDCLASS WindowClass{};
 	WindowClass.lpfnWndProc		= WindowProc;
 	WindowClass.hInstance		= HInstance;
 	WindowClass.lpszClassName	= EngineClass;

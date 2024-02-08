@@ -26,6 +26,8 @@
 
 #include <Windows.h>
 
+#include "Core/Public/CoreMinimal.h"
+
 // g_var
 extern HINSTANCE	HInstance;
 WCHAR				EngineClass				[]	= L"Engine";
@@ -34,6 +36,7 @@ extern int			CmdShow;
 
 void FWindowsWindow::Setup(FGenericWindowDefinition const& InDefinition)
 {
+	DWORD ExStyle				= 0;
 	LPCWSTR WindowClassName		= EngineClass;
 	LPCWSTR WindowName			= ApplicationWindowName;
 	DWORD Style					= WS_OVERLAPPEDWINDOW | WS_CLIPCHILDREN;	// https://learn.microsoft.com/en-us/windows/win32/winmsg/window-styles
@@ -46,7 +49,8 @@ void FWindowsWindow::Setup(FGenericWindowDefinition const& InDefinition)
 	HINSTANCE Instance			= HInstance;
 	LPVOID Param				= nullptr;									// https://learn.microsoft.com/en-us/windows/win32/learnwin32/managing-application-state-
 
-	HWND HWindow = CreateWindow(
+	HWND HWindow = CreateWindowEx(
+		ExStyle,
 		WindowClassName,
 		WindowName,
 		Style,
@@ -60,6 +64,7 @@ void FWindowsWindow::Setup(FGenericWindowDefinition const& InDefinition)
 
 	if(HWindow == nullptr)
 	{
+		CONSOLE_LOG("Window Creation Success!");
 		return;
 	}
 

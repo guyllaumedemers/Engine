@@ -20,10 +20,15 @@
 
 #pragma once
 
-void PrintConsole(char const* Fmt, ...) {
+#include <stdio.h>
+
+inline void PrintConsole(char const* Fmt, ...) {
 
 	// TODO @gdemers 2024-01-09 Create impl for a console logger, use external lib
 	// and wrap impl details
+
+	// TODO @gdemers 2024-01-09 Unfold variadic arguments later
+	puts(Fmt);
 }
 
-#define CONSOLE_LOG(Format, __VA_ARGS__) PrintConsole(Format, __VA_ARGS__)
+#define CONSOLE_LOG(Format, ...) PrintConsole(Format, __VA_ARGS__)
