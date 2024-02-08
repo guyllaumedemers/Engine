@@ -1,7 +1,7 @@
 {
   "configurations": [
     {
-      "currentDir": "${workspaceRoot}/out",
+      "currentDir": "${workspaceRoot}\\out",
       "isDefaultConfiguration": true,
       "name": "Sandbox.exe",
       "project": "out\\Sandbox.exe",

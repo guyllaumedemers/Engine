@@ -29,9 +29,14 @@ class FWindowsPlatformApplication : public FGenericPlatformApplication {
 
 public:
 	FWindowsPlatformApplication();
+	virtual ~FWindowsPlatformApplication() override;
+	FWindowsPlatformApplication(FWindowsPlatformApplication const&)				= delete;
+	FWindowsPlatformApplication(FWindowsPlatformApplication&&)					= default;
+	FWindowsPlatformApplication& operator=(FWindowsPlatformApplication const&)	= delete;
+	FWindowsPlatformApplication& operator=(FWindowsPlatformApplication&&)		= default;
+
 	static	TSharedPtr<FGenericPlatformApplication> CreatePlatformApplication();
-	virtual TSharedPtr<FGenericWindow>				MakeWindow() const override;
-	virtual	void									SetupWindowContext(TSharedPtr<FGenericWindow> InWindow, FGenericWindowDefinition const& InDefinition) override;
+	virtual bool									MakeWindow(FGenericWindowDefinition const& InDefinition, TSharedPtr<FGenericWindow>& OutWindow) override;
 };
 
 /**

@@ -32,11 +32,11 @@ class FGenericPlatformApplication;
 class FApplication {
 
 public:
-	FApplication() = default;
-	FApplication(const FApplication&) = delete;
-	FApplication(FApplication&&) = delete;
-	FApplication& operator=(const FApplication&) = delete;
-	FApplication& operator=(FApplication&&) = delete;
+	FApplication()									= default;
+	FApplication(FApplication const&)				= delete;
+	FApplication(FApplication&&)					= default;
+	FApplication& operator=(FApplication const&)	= delete;
+	FApplication& operator=(FApplication&&)			= default;
 
 	// TODO @gdemers 2024-02-04 Provide impl for SharedRef. Require being safe noexcept ?
 	static FApplication&	Get() { return (*Application); }
@@ -44,8 +44,6 @@ public:
 	void					MakeWindow();
 
 private:
-	static void				Create(TSharedPtr<FGenericPlatformApplication> InPlatform);
-
 	TSharedPtr<FGenericPlatformApplication> Platform;
 	static TSharedPtr<FApplication>			Application;
 };

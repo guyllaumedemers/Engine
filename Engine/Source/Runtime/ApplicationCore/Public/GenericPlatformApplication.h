@@ -35,20 +35,8 @@ public:
 	virtual ~FGenericPlatformApplication() = default;
 
 	static	TSharedPtr<FGenericPlatformApplication>		CreatePlatformApplication();
-	virtual TSharedPtr<FGenericWindow>					MakeWindow() const { return nullptr; }
-	virtual void										SetupWindowContext(TSharedPtr<FGenericWindow> InWindow, FGenericWindowDefinition const& InDefinition) {}
+	virtual bool										MakeWindow(FGenericWindowDefinition const& InDefinition, TSharedPtr<FGenericWindow>& OutWindow) = 0;
 
 protected:
 	TSet<TSharedPtr<FGenericWindow>>	Windows;
-};
-
-/**
- *	POD. Represent 'Window' context data. platform independent.
- */
-struct FGenericWindowDefinition
-{
-	float PosX = 0.f;
-	float PosY = 0.f;
-	float Width = 0.f;
-	float Height = 0.f;
 };

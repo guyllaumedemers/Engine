@@ -26,32 +26,44 @@
 
 #include <Windows.h>
 
+// g_var
+extern HINSTANCE	HInstance;
+WCHAR				EngineClass				[]	= L"Engine";
+WCHAR				ApplicationWindowName	[]	= L"Application";
+extern int			CmdShow;
+
 void FWindowsWindow::Setup(FGenericWindowDefinition const& InDefinition)
 {
-	// TODO @gdemers 2024-02-05 Complete Window Creation using win32 api
-	LPCWSTR WindowClassName = L"";
-	LPCWSTR WindowName = L"";
-	DWORD Style = 0;
-	int X = 0;
-	int Y = 0;
-	int Width = 0;
-	int Height = 0;
-	HWND Parent = nullptr;
-	HMENU Menu = nullptr;
-	HINSTANCE Instance = nullptr;
-	LPVOID Param = nullptr;
+	LPCWSTR WindowClassName		= EngineClass;
+	LPCWSTR WindowName			= ApplicationWindowName;
+	DWORD Style					= WS_OVERLAPPEDWINDOW | WS_CLIPCHILDREN;	// https://learn.microsoft.com/en-us/windows/win32/winmsg/window-styles
+	int X						= InDefinition.X;
+	int Y						= InDefinition.Y;
+	int W						= InDefinition.W;
+	int H						= InDefinition.H;
+	HWND Parent					= nullptr;
+	HMENU Menu					= nullptr;									// https://learn.microsoft.com/en-us/windows/win32/menurc/using-menus
+	HINSTANCE Instance			= HInstance;
+	LPVOID Param				= nullptr;									// https://learn.microsoft.com/en-us/windows/win32/learnwin32/managing-application-state-
 
 	HWND HWindow = CreateWindow(
 		WindowClassName,
 		WindowName,
 		Style,
 		X, Y,
-		Width, Height,
+		W, H,
 		Parent,
 		Menu,
 		Instance,
 		Param
 	);
+
+	if(HWindow == nullptr)
+	{
+		return;
+	}
+
+	ShowWindow(HWindow, CmdShow);
 }
 
 #endif

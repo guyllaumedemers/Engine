@@ -1,5 +1,4 @@
 {
-  "version": "0.0.1",
   "tasks": [
     {
       "appliesTo": "Engine/Source/build.bat",
@@ -17,5 +16,6 @@
       "type": "launch",
       "workingDirectory": "${workspaceRoot}/Sandbox/Source"
     }
-  ]
+  ],
+  "version": "0.0.1"
 }

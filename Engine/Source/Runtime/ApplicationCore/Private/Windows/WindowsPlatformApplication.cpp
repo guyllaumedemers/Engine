@@ -27,37 +27,29 @@
 #include "ApplicationCore/Public/Windows/WindowsWindow.h"
 
 // g_var
-extern "C"
-{
-	HINSTANCE HInstance;
-}
-
-// g_var
-extern "C" {
-
-	WCHAR EngineClass[] = L"Engine";
-}
+extern HINSTANCE	HInstance;
+extern WCHAR		EngineClass[];
 
 // global_func
 static LRESULT CALLBACK WindowProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 {
-	LRESULT Output = 0;
 
 	//// TODO @gdemers handle message pump by operating system
 	switch (uMsg)
 	{
-	case WM_SIZE: // Handle window resizing
+	case WM_SIZE:
+		// Handle window resizing
 		break;
 	default:
 		break;
 	}
 
-	return Output;
+	return DefWindowProc(hwnd, uMsg, wParam, lParam);
 }
 
 FWindowsPlatformApplication::FWindowsPlatformApplication()
 {
-
+	// TODO @gdemers 2024-02-07 Add support for Cursor and Application Icon
 	WNDCLASS WindowClass;
 	WindowClass.lpfnWndProc		= WindowProc;
 	WindowClass.hInstance		= HInstance;
@@ -66,22 +58,25 @@ FWindowsPlatformApplication::FWindowsPlatformApplication()
 	RegisterClass(&WindowClass);
 }
 
+FWindowsPlatformApplication::~FWindowsPlatformApplication()
+{
+	UnregisterClass(EngineClass, HInstance);
+}
+
 TSharedPtr<FGenericPlatformApplication> FWindowsPlatformApplication::CreatePlatformApplication()
 {
 	return MakeShared<FWindowsPlatformApplication>();
 }
 
-TSharedPtr<FGenericWindow> FWindowsPlatformApplication::MakeWindow() const
+bool FWindowsPlatformApplication::MakeWindow(FGenericWindowDefinition const& InDefinition, TSharedPtr<FGenericWindow>& OutWindow)
 {
-	return MakeShared<FWindowsWindow>();
-}
+	auto const Window = MakeShared<FWindowsWindow>();
+	Window->Setup(InDefinition);
 
-void FWindowsPlatformApplication::SetupWindowContext(TSharedPtr<FGenericWindow> InWindow, FGenericWindowDefinition const& InDefinition)
-{
-	// setup context details on the object instance
-	InWindow->Setup(InDefinition);
-	// cache instance
-	Windows.insert(InWindow);
+	auto const OutPair						= Windows.insert(Window);
+	OutWindow								= *OutPair.first;
+
+	return OutPair.second;
 }
 
 #endif

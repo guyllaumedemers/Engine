@@ -24,6 +24,7 @@
 
 #ifdef PLATFORM_WINDOWS
 #include "ApplicationCore/Public/Windows/WindowsPlatformApplication.h"
+#include "ApplicationCore/Public/Windows/WindowsWindow.h"
 #endif
 
 // g_var
@@ -31,19 +32,13 @@ TSharedPtr<FApplication> FApplication::Application = nullptr;
 
 void FApplication::Create()
 {
-	Create(FPlatformApplication::CreatePlatformApplication());
-}
-
-void FApplication::Create(TSharedPtr<FGenericPlatformApplication> InPlatform)
-{
-	// setup application context
 	Application				= MakeShared<FApplication>();
-	Application->Platform	= InPlatform;
+	Application->Platform	= FPlatformApplication::CreatePlatformApplication();
 }
 
 void FApplication::MakeWindow()
 {
-	// setup window context
-	TSharedPtr<FGenericWindow> MainWindow = Platform->MakeWindow();
-	Platform->SetupWindowContext(MainWindow, {});
+	// TODO @gdemers 2024-02-07 Run assertion failure check here
+	TSharedPtr<FGenericWindow> OutWindow;
+	Platform->MakeWindow({}, OutWindow);
 }

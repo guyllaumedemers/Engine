@@ -28,11 +28,11 @@
 class FWindowsWindow : public FGenericWindow {
 
 public:
-	FWindowsWindow() = default;
-	FWindowsWindow(const FWindowsWindow&) = delete;
-	FWindowsWindow(FWindowsWindow&&) = default;
-	FWindowsWindow& operator=(const FWindowsWindow&) = delete;
-	FWindowsWindow& operator=(FWindowsWindow&&) = default;
+	FWindowsWindow()									= default;
+	FWindowsWindow(FWindowsWindow const&)				= delete;
+	FWindowsWindow(FWindowsWindow&&)					= default;
+	FWindowsWindow& operator=(FWindowsWindow const&)	= delete;
+	FWindowsWindow& operator=(FWindowsWindow&&)			= default;
 
 	virtual void Setup(FGenericWindowDefinition const& InDefinition) override;
 };

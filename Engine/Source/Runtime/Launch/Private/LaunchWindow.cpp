@@ -24,10 +24,9 @@
 
 #include <Windows.h>
 
-#include <stdio.h>
-
 // g_var
-HINSTANCE HInstance = nullptr;
+HINSTANCE	HInstance	= nullptr;
+int			CmdShow		= 0;
 
 // g_func
 extern int GuardedMain();
@@ -37,7 +36,8 @@ int ENGINE_API LaunchWindowStartup(HINSTANCE hInstance, HINSTANCE hPrevInstance,
 
 	int ErrorLevel = 0;
 
-	HInstance = hInstance;
+	HInstance	= hInstance;
+	CmdShow		= nCmdShow;
 
 	// call cross-platform 'main' that startup the engine
 	ErrorLevel = GuardedMain();
