@@ -25,6 +25,7 @@
 // fwd decl
 class	FGenericWindow;
 struct	FGenericWindowDefinition;
+struct	FGenericMessageBoxDefinition;
 
 /**
  *	Abstraction. Platform Application. Handle Creation Context for a 'Window' Application and platform messaging.
@@ -36,6 +37,7 @@ public:
 
 	static	TSharedPtr<FGenericPlatformApplication>		CreatePlatformApplication();
 	virtual bool										MakeWindow(FGenericWindowDefinition const& InDefinition, TSharedPtr<FGenericWindow>& OutWindow) = 0;
+	static	int											MakeMessageBox(FGenericMessageBoxDefinition const& InDefinition) { return 0; }
 
 	virtual void PumpMessages() const = 0;
 

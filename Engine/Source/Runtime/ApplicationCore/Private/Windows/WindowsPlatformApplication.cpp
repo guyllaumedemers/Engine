@@ -34,6 +34,17 @@ extern void			BeginExitRequest();
 extern HINSTANCE	HInstance;
 extern WCHAR		EngineClass[];
 
+/**
+ *	Context Object. Impl specific for Windows of a MessageBox dialogue.
+ */
+struct FGenericMessageBoxDefinition
+{
+	HWND	HWindow		= nullptr;
+	LPCWSTR Text		= nullptr;
+	LPCWSTR Caption		= nullptr;
+	UINT	Type		= 0;
+};
+
 // global_func
 static LRESULT CALLBACK WindowProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 {
@@ -54,7 +65,13 @@ static LRESULT CALLBACK WindowProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM l
 		break;
 	case WM_CLOSE:
 		{
-			if (MessageBox(hwnd, L"Really quit?", L"My application", MB_OKCANCEL) == IDOK)
+			FGenericMessageBoxDefinition Definition;
+			Definition.HWindow	= hwnd;
+			Definition.Text		= L"Really quit?";
+			Definition.Caption	= EngineClass;
+			Definition.Type		= MB_OKCANCEL;
+
+			if (FPlatformApplication::MakeMessageBox(Definition) == IDOK)
 			{
 				CONSOLE_LOG("Window Close Success!");
 				DestroyWindow(hwnd);
@@ -67,7 +84,7 @@ static LRESULT CALLBACK WindowProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM l
 			PostQuitMessage(0);
 			BeginExitRequest();
 		}
-		break;
+		return 0;
 	}
 
 	return DefWindowProc(hwnd, uMsg, wParam, lParam);
@@ -106,12 +123,22 @@ bool FWindowsPlatformApplication::MakeWindow(FGenericWindowDefinition const& InD
 	return OutPair.second;
 }
 
+int FWindowsPlatformApplication::MakeMessageBox(FGenericMessageBoxDefinition const& InDefinition)
+{
+	return MessageBox(
+		InDefinition.HWindow,
+		InDefinition.Text,
+		InDefinition.Caption,
+		InDefinition.Type
+	);
+}
+
 void FWindowsPlatformApplication::PumpMessages() const
 {
 	MSG OutMsg{};
 	BOOL bResult{0};
 
-	while ((bResult = GetMessage(&OutMsg, nullptr, 0, 0)) > 0)
+	while ((bResult = GetMessage(&OutMsg, nullptr,NULL, NULL)) > 0)
 	{
 		TranslateMessage(&OutMsg);
 		DispatchMessage(&OutMsg);
