@@ -24,7 +24,6 @@
 
 // fwd decl
 class	FGenericWindow;
-struct	FGenericWindowDefinition;
 struct	FGenericMessageBoxDefinition;
 
 /**
@@ -36,7 +35,7 @@ public:
 	virtual ~FGenericPlatformApplication() = default;
 
 	static	TSharedPtr<FGenericPlatformApplication>		CreatePlatformApplication();
-	virtual bool										MakeWindow(FGenericWindowDefinition const& InDefinition, TSharedPtr<FGenericWindow>& OutWindow) = 0;
+	virtual bool										MakeWindow(TSharedPtr<FGenericWindow>& OutWindow) = 0;
 	static	int											MakeMessageBox(FGenericMessageBoxDefinition const& InDefinition) { return 0; }
 
 	virtual void PumpMessages() const = 0;

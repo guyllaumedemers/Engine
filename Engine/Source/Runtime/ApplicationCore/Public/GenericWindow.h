@@ -33,13 +33,3 @@ public:
 
 	virtual bool Setup(FGenericWindowDefinition const& InDefinition) = 0;
 };
-
-/**
- *	POD. Represent 'Window' context data. platform independent.
- */
-struct FGenericWindowDefinition
-{
-	int Style : 8;			// Assuming all platform use bitmask values to set window styles
-	int X, Y	= 0.f;
-	int W, H	= 0.f;
-};

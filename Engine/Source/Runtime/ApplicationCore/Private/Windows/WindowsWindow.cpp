@@ -26,28 +26,23 @@
 
 #include <Windows.h>
 
-#include "Core/Public/CoreMinimal.h"
-
 // g_var
-extern HINSTANCE	HInstance;
-WCHAR				EngineClass				[]	= L"Engine";
-WCHAR				ApplicationWindowName	[]	= L"Application";
 extern int			CmdShow;
 
 bool FWindowsWindow::Setup(FGenericWindowDefinition const& InDefinition)
 {
-	DWORD ExStyle				= 0;
-	LPCWSTR WindowClassName		= EngineClass;
-	LPCWSTR WindowName			= ApplicationWindowName;
-	DWORD Style					= WS_OVERLAPPEDWINDOW | WS_CLIPCHILDREN;	// https://learn.microsoft.com/en-us/windows/win32/winmsg/window-styles
-	int X						= InDefinition.X;
-	int Y						= InDefinition.Y;
-	int W						= InDefinition.W;
-	int H						= InDefinition.H;
-	HWND Parent					= nullptr;
-	HMENU Menu					= nullptr;									// https://learn.microsoft.com/en-us/windows/win32/menurc/using-menus
-	HINSTANCE Instance			= HInstance;
-	LPVOID Param				= nullptr;									// https://learn.microsoft.com/en-us/windows/win32/learnwin32/managing-application-state-
+	DWORD		ExStyle			= InDefinition.ExStyle;
+	LPCWSTR		WindowClassName	= InDefinition.WindowClassName;
+	LPCWSTR		WindowName		= InDefinition.WindowName;
+	DWORD		Style			= InDefinition.Style;
+	int			X				= InDefinition.X;
+	int			Y				= InDefinition.Y;
+	int			W				= InDefinition.W;
+	int			H				= InDefinition.H;
+	HWND		Parent			= InDefinition.HWindowParent;
+	HMENU		Menu			= InDefinition.HMenu;
+	HINSTANCE	Instance		= InDefinition.HInstance;
+	LPVOID		Param			= InDefinition.Param;
 
 	Details.HWindow = CreateWindowEx(
 		ExStyle,

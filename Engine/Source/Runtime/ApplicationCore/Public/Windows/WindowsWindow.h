@@ -39,6 +39,24 @@ struct FWindowDetails
 };
 
 /**
+ *	Context Details. Impl specific to Windows platform but can be forward
+ *	declared and used externally.
+ */
+struct FGenericWindowDefinition
+{
+	DWORD		ExStyle			= 0;
+	LPCWSTR		WindowClassName = L"";
+	LPCWSTR		WindowName		= L"";
+	DWORD		Style			= 0;		// https://learn.microsoft.com/en-us/windows/win32/winmsg/window-styles
+	int			X, Y			= 0;
+	int			W, H			= 0;
+	HWND		HWindowParent	= nullptr;
+	HMENU		HMenu			= nullptr;	// https://learn.microsoft.com/en-us/windows/win32/menurc/using-menus
+	HINSTANCE	HInstance		= nullptr;
+	LPVOID		Param			= nullptr;	// https://learn.microsoft.com/en-us/windows/win32/learnwin32/managing-application-state-
+};
+
+/**
  *	Context Object. Define a 'Window' context for the Windows platform.
  */
 class FWindowsWindow : public FGenericWindow {

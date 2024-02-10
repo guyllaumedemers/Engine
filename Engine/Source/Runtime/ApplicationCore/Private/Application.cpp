@@ -38,16 +38,9 @@ void FApplication::Create()
 
 void FApplication::MakeWindow()
 {
-	// TODO @gdemers 2024-02-08 Update to be more inline with the application context use case
-	FGenericWindowDefinition WindowDefinition;
-	WindowDefinition.X = 100;
-	WindowDefinition.Y = 100;
-	WindowDefinition.W = 400;
-	WindowDefinition.H = 400;
-
 	// TODO @gdemers 2024-02-07 Run assertion failure check here
 	TSharedPtr<FGenericWindow> OutWindow;
-	Platform->MakeWindow(WindowDefinition, OutWindow);
+	Platform->MakeWindow(OutWindow);
 }
 
 void FApplication::Tick()

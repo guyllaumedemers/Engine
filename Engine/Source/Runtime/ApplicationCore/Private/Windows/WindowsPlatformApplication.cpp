@@ -32,7 +32,8 @@ extern void			BeginExitRequest();
 
 // g_var
 extern HINSTANCE	HInstance;
-extern WCHAR		EngineClass[];
+WCHAR				EngineClass[]			= L"Engine";
+WCHAR				ApplicationWindowName[] = L"Application";
 
 /**
  *	Context Object. Impl specific for Windows of a MessageBox dialogue.
@@ -111,11 +112,31 @@ TSharedPtr<FGenericPlatformApplication> FWindowsPlatformApplication::CreatePlatf
 	return MakeShared<FWindowsPlatformApplication>();
 }
 
-bool FWindowsPlatformApplication::MakeWindow(FGenericWindowDefinition const& InDefinition, TSharedPtr<FGenericWindow>& OutWindow)
+bool FWindowsPlatformApplication::MakeWindow(TSharedPtr<FGenericWindow>& OutWindow)
 {
+	// TODO @gdemers 2024-02-10 For now, we only ever create a single window. Context Data provided here
+	// represent the Application Window.
+	// Move Context Detail generation outside this function so Window creation gets passed
+	// details specific to the calling function and be configured from the caller point of View
+	// i.e 'this' function call should ONLY create an empty context window
+	// and be initialized AFTER
+	// The interface for the Factory method that generate the required data should be platform agnostic
+	FGenericWindowDefinition WindowDefinition{};
+	WindowDefinition.ExStyle			= 0;
+	WindowDefinition.WindowClassName	= EngineClass;
+	WindowDefinition.WindowName			= ApplicationWindowName;
+	WindowDefinition.Style				= WS_OVERLAPPEDWINDOW | WS_CLIPCHILDREN;
+	WindowDefinition.X					= 100;
+	WindowDefinition.Y					= 100;
+	WindowDefinition.W					= 400;
+	WindowDefinition.H					= 400;
+	WindowDefinition.HWindowParent		= nullptr;
+	WindowDefinition.HInstance			= HInstance;
+	WindowDefinition.Param				= nullptr;
+
 	auto const Window = MakeShared<FWindowsWindow>();
 	// TODO @gdemers 2024-02-10 Run assertion failure
-	Window->Setup(InDefinition);
+	Window->Setup(WindowDefinition);
 
 	auto const OutPair	= Windows.insert(Window);
 	OutWindow			= *OutPair.first;

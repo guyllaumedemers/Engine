@@ -49,6 +49,6 @@ private:
 	float					GetDelta() const;
 	void					TickPlatform(float const Delta);
 
-	TSharedPtr<FGenericPlatformApplication> Platform;
+	TSharedPtr<FGenericPlatformApplication> Platform = nullptr;
 	static TSharedPtr<FApplication>			Application;
 };

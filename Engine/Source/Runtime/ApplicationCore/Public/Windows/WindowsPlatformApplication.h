@@ -36,7 +36,7 @@ public:
 	FWindowsPlatformApplication& operator=(FWindowsPlatformApplication&&)		= default;
 
 	static	TSharedPtr<FGenericPlatformApplication> CreatePlatformApplication();
-	virtual bool									MakeWindow(FGenericWindowDefinition const& InDefinition, TSharedPtr<FGenericWindow>& OutWindow) override;
+	virtual bool									MakeWindow(TSharedPtr<FGenericWindow>& OutWindow) override;
 	static	int										MakeMessageBox(FGenericMessageBoxDefinition const& InDefinition);
 
 	virtual void PumpMessages() const override;
