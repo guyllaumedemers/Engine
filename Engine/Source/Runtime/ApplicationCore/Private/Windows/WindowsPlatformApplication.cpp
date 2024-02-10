@@ -159,7 +159,7 @@ void FWindowsPlatformApplication::PumpMessages() const
 	MSG OutMsg{};
 	BOOL bResult{0};
 
-	while ((bResult = GetMessage(&OutMsg, nullptr,NULL, NULL)) > 0)
+	while ((bResult = PeekMessage(&OutMsg, nullptr,NULL, NULL, PM_REMOVE)) > 0)
 	{
 		TranslateMessage(&OutMsg);
 		DispatchMessage(&OutMsg);
