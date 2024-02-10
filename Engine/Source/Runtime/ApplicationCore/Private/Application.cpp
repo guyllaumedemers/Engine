@@ -38,6 +38,7 @@ void FApplication::Create()
 
 void FApplication::MakeWindow()
 {
+	// TODO @gdemers 2024-02-08 Update to be more inline with the application context use case
 	FGenericWindowDefinition WindowDefinition;
 	WindowDefinition.X = 100;
 	WindowDefinition.Y = 100;
@@ -47,4 +48,24 @@ void FApplication::MakeWindow()
 	// TODO @gdemers 2024-02-07 Run assertion failure check here
 	TSharedPtr<FGenericWindow> OutWindow;
 	Platform->MakeWindow(WindowDefinition, OutWindow);
+}
+
+void FApplication::Tick()
+{
+	// application delta time to use on 'this' frame
+	float const Delta = GetDelta();
+
+	// tick platform code so we can pump message and repaint application window
+	TickPlatform(Delta);
+}
+
+float FApplication::GetDelta() const
+{
+	return 0.f;
+}
+
+void FApplication::TickPlatform(float const Delta)
+{
+	// pump platform messages
+	Platform->PumpMessages();
 }

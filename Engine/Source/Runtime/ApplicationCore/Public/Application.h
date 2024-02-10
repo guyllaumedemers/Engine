@@ -43,7 +43,12 @@ public:
 	static void				Create();
 	void					MakeWindow();
 
+	void					Tick();
+
 private:
+	float					GetDelta() const;
+	void					TickPlatform(float const Delta);
+
 	TSharedPtr<FGenericPlatformApplication> Platform;
 	static TSharedPtr<FApplication>			Application;
 };

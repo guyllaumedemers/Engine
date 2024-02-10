@@ -27,6 +27,9 @@
 #include "ApplicationCore/Public/Windows/WindowsWindow.h"
 #include "Core/Public/CoreMinimal.h"
 
+// g_func
+extern void			BeginExitRequest();
+
 // g_var
 extern HINSTANCE	HInstance;
 extern WCHAR		EngineClass[];
@@ -34,7 +37,6 @@ extern WCHAR		EngineClass[];
 // global_func
 static LRESULT CALLBACK WindowProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 {
-	//// TODO @gdemers handle message pump by operating system
 	switch (uMsg)
 	{
 	case WM_CREATE:
@@ -42,7 +44,29 @@ static LRESULT CALLBACK WindowProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM l
 			CONSOLE_LOG("Window Creation Success!");
 		}
 		break;
-	default:
+	case WM_PAINT:
+		{
+		}
+		break;
+	case WM_SIZE:
+		{
+		}
+		break;
+	case WM_CLOSE:
+		{
+			if (MessageBox(hwnd, L"Really quit?", L"My application", MB_OKCANCEL) == IDOK)
+			{
+				CONSOLE_LOG("Window Close Success!");
+				DestroyWindow(hwnd);
+			}
+		}
+		return 0;
+	case WM_DESTROY:
+		{
+			CONSOLE_LOG("Window Destroy Begin!");
+			PostQuitMessage(0);
+			BeginExitRequest();
+		}
 		break;
 	}
 
@@ -73,12 +97,33 @@ TSharedPtr<FGenericPlatformApplication> FWindowsPlatformApplication::CreatePlatf
 bool FWindowsPlatformApplication::MakeWindow(FGenericWindowDefinition const& InDefinition, TSharedPtr<FGenericWindow>& OutWindow)
 {
 	auto const Window = MakeShared<FWindowsWindow>();
+	// TODO @gdemers 2024-02-10 Run assertion failure
 	Window->Setup(InDefinition);
 
-	auto const OutPair						= Windows.insert(Window);
-	OutWindow								= *OutPair.first;
+	auto const OutPair	= Windows.insert(Window);
+	OutWindow			= *OutPair.first;
 
 	return OutPair.second;
+}
+
+void FWindowsPlatformApplication::PumpMessages() const
+{
+	MSG OutMsg{};
+	BOOL bResult{0};
+
+	while ((bResult = GetMessage(&OutMsg, nullptr, 0, 0)) > 0)
+	{
+		TranslateMessage(&OutMsg);
+		DispatchMessage(&OutMsg);
+	}
+
+	// -1 result in an error, while 0 exit
+	if(bResult < 0)
+	{
+		// TODO @gdemers 2024-02-10 Process error logs
+		DWORD ErrorMsg = GetLastError();
+		//CONSOLE_LOG("PeekMessage Failure! Error Code:?");
+	}
 }
 
 #endif

@@ -22,6 +22,22 @@
 
 #include "ApplicationCore/Public/GenericWindow.h"
 
+#include "Core/Public/Misc/CoreDefines.h"
+
+#ifdef PLATFORM_WINDOWS
+
+#include <Windows.h>
+
+/**
+ *	Context Details. Impl specific to Windows platform but can be forward
+ *	declared and used externally.
+ */
+struct FWindowDetails
+{
+	// TODO @gdemers 2024-02-10 Keep size relevant ordering for optimized cache access
+	HWND HWindow = nullptr;
+};
+
 /**
  *	Context Object. Define a 'Window' context for the Windows platform.
  */
@@ -34,5 +50,11 @@ public:
 	FWindowsWindow& operator=(FWindowsWindow const&)	= delete;
 	FWindowsWindow& operator=(FWindowsWindow&&)			= default;
 
-	virtual void Setup(FGenericWindowDefinition const& InDefinition) override;
+	virtual bool Setup(FGenericWindowDefinition const& InDefinition) override;
+
+private:
+	// Context details
+	FWindowDetails Details;
 };
+
+#endif

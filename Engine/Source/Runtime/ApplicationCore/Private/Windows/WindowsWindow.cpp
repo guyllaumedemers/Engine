@@ -34,7 +34,7 @@ WCHAR				EngineClass				[]	= L"Engine";
 WCHAR				ApplicationWindowName	[]	= L"Application";
 extern int			CmdShow;
 
-void FWindowsWindow::Setup(FGenericWindowDefinition const& InDefinition)
+bool FWindowsWindow::Setup(FGenericWindowDefinition const& InDefinition)
 {
 	DWORD ExStyle				= 0;
 	LPCWSTR WindowClassName		= EngineClass;
@@ -49,7 +49,7 @@ void FWindowsWindow::Setup(FGenericWindowDefinition const& InDefinition)
 	HINSTANCE Instance			= HInstance;
 	LPVOID Param				= nullptr;									// https://learn.microsoft.com/en-us/windows/win32/learnwin32/managing-application-state-
 
-	HWND HWindow = CreateWindowEx(
+	Details.HWindow = CreateWindowEx(
 		ExStyle,
 		WindowClassName,
 		WindowName,
@@ -62,13 +62,13 @@ void FWindowsWindow::Setup(FGenericWindowDefinition const& InDefinition)
 		Param
 	);
 
-	if(HWindow == nullptr)
+	if(Details.HWindow == nullptr)
 	{
-		CONSOLE_LOG("Window Creation Success!");
-		return;
+		return FALSE;
 	}
 
-	ShowWindow(HWindow, CmdShow);
+	ShowWindow(Details.HWindow, CmdShow);
+	return TRUE;
 }
 
 #endif

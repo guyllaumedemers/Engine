@@ -31,7 +31,7 @@ class FGenericWindow {
 public:
 	virtual ~FGenericWindow() = default;
 
-	virtual void Setup(FGenericWindowDefinition const& InDefinition) {}
+	virtual bool Setup(FGenericWindowDefinition const& InDefinition) = 0;
 };
 
 /**

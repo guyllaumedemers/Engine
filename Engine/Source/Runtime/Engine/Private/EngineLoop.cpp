@@ -40,6 +40,8 @@ int FEngineLoop::Init()
 
 void FEngineLoop::Tick()
 {
+	// tick application so we can update window and poll events
+	FApplication::Get().Tick();
 }
 
 void FEngineLoop::PreExit()

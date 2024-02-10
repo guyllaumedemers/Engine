@@ -37,6 +37,8 @@ public:
 
 	static	TSharedPtr<FGenericPlatformApplication> CreatePlatformApplication();
 	virtual bool									MakeWindow(FGenericWindowDefinition const& InDefinition, TSharedPtr<FGenericWindow>& OutWindow) override;
+
+	virtual void PumpMessages() const override;
 };
 
 /**
