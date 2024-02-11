@@ -27,11 +27,13 @@
 	#define PLATFORM_WINDOWS
 	#endif
 
+	// TODO @gdemers 2024-02-11 Determine where UNICODE or ANSI has to be set
+	// might not be platform specific ?
 	#ifndef UNICODE
 	#define UNICODE
 	#endif
 
-	#if defined(DCLSPEC_EXPORT)
+	#if DCLSPEC_EXPORT
 	#define ENGINE_API __declspec(dllexport)
 	#else
 	#define ENGINE_API __declspec(dllimport)	
@@ -39,4 +41,14 @@
 
 #else
 	#error "Platform currently not supported! Only Windows x64 can run the following project." 
+#endif
+
+#if defined(_DEBUG) || defined(__DEBUG__) || defined(DEBUG)
+
+	// enable assertion flag
+	#define ASSERT_ENABLED
+
+	// enable debugging flag
+	#define DEBUGGING_ENABLED
+
 #endif

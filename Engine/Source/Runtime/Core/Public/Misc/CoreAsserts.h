@@ -20,39 +20,50 @@
 
 #pragma once
 
-// stl headers
-#include <memory>
-#include <set>
-#include <unordered_map>
-#include <utility>
+#include "Core/Public/Misc/CoreDefines.h"
 
-#include "Core/Public/Misc/CoreAsserts.h"
-#include "Core/Public/Misc/CoreLogger.h"
+/**
+ *	Context Object. Abstract LogInfo from exported symbols.
+ */
+struct ENGINE_API FDebug
+{
+	static void LogVerifyCheckFailed	(char const* Fmt, ...);
+	static char const* LogAssertFailed	(char const* Fmt, ...);
+};
 
-template<typename TKey, typename TValue>
-using TMap = std::unordered_map<TKey, TValue>;
+#ifdef ASSERT_ENABLED
 
-template<typename T>
-using TSet = std::set<T>;
+	// DEBUG MODE
+	#ifdef _MSC_VER
+		#include <intrin.h>
+		#define PLATFORM_BREAK() (__debugbreak())
+	#else
+		#define PLATFORM_BREAK() (__builtin_trap())
+	#endif
 
-template<typename T>
-using TUniquePtr = std::unique_ptr<T>;
+	#define CHECK_IMPL(expr, fmt, ...)						\
+		if(expr) {											\
+		}													\
+		else {												\
+			FDebug::LogVerifyCheckFailed(fmt, __VA_ARGS__);	\
+			PLATFORM_BREAK();								\
+		}
 
-template<typename T, typename ...Args>
-TUniquePtr<T> MakeUnique(Args&&... args) {
+	// Runtime-time assertion w/ debug_break
+	#define check(expr, fmt, ...) CHECK_IMPL(expr, fmt, __VA_ARGS__)
 
-	return std::make_unique<T>(std::forward<Args>(args)...);
-}
+#else
+	#define check(expr, fmt, ...)
+#endif
 
-template<typename T>
-using TSharedPtr = std::shared_ptr<T>;
+#ifdef __cpp_static_assert
 
-template<typename T, typename ...Args>
-TSharedPtr<T> MakeShared(Args&&... args) {
+	// Compile-time assertion
+	#define verify(expr, fmt, ...)											\
+		{																	\
+			static_assert(expr, FDebug::LogAssertFailed(fmt, __VA_ARGS__));	\
+		}
 
-	return std::make_shared<T>(std::forward<Args>(args)...);
-}
-
-template<typename T>
-using TWeakPtr = std::weak_ptr<T>;
-
+#else
+#error "CppRuntime library doesn't support assertion symbols! Curr_version < C++11."
+#endif

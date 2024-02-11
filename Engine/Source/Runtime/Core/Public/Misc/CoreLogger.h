@@ -20,39 +20,34 @@
 
 #pragma once
 
-// stl headers
-#include <memory>
-#include <set>
-#include <unordered_map>
-#include <utility>
+#include "Core/Public/Misc/CoreDefines.h"
 
-#include "Core/Public/Misc/CoreAsserts.h"
-#include "Core/Public/Misc/CoreLogger.h"
+// fwd _decl
+enum class ELogLevel;
 
-template<typename TKey, typename TValue>
-using TMap = std::unordered_map<TKey, TValue>;
+/**
+ *	Context Object. Provide logging API.
+ */
+struct ENGINE_API FConsoleLogger {
 
-template<typename T>
-using TSet = std::set<T>;
+	static void Log(ELogLevel Level, char const* Fmt, ...);
+};
 
-template<typename T>
-using TUniquePtr = std::unique_ptr<T>;
+/**
+ *	State Object.
+ */
+enum class ELogLevel
+{
+	FATAL = 0,
+	ERROR,
+	WARNING,
+	MESSAGE,
+	DEBUG,
+	TRACE
+};
 
-template<typename T, typename ...Args>
-TUniquePtr<T> MakeUnique(Args&&... args) {
+#ifdef DEBUGGING_ENABLED
 
-	return std::make_unique<T>(std::forward<Args>(args)...);
-}
-
-template<typename T>
-using TSharedPtr = std::shared_ptr<T>;
-
-template<typename T, typename ...Args>
-TSharedPtr<T> MakeShared(Args&&... args) {
-
-	return std::make_shared<T>(std::forward<Args>(args)...);
-}
-
-template<typename T>
-using TWeakPtr = std::weak_ptr<T>;
-
+	// enable logging
+	#define CONSOLE_LOG(Level, Fmt, ...)  FConsoleLogger::Log(Level, Fmt, __VA_ARGS__)
+#endif

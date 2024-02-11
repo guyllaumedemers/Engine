@@ -18,41 +18,18 @@
 //OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 //SOFTWARE.
 
-#pragma once
-
-// stl headers
-#include <memory>
-#include <set>
-#include <unordered_map>
-#include <utility>
-
 #include "Core/Public/Misc/CoreAsserts.h"
+
 #include "Core/Public/Misc/CoreLogger.h"
 
-template<typename TKey, typename TValue>
-using TMap = std::unordered_map<TKey, TValue>;
-
-template<typename T>
-using TSet = std::set<T>;
-
-template<typename T>
-using TUniquePtr = std::unique_ptr<T>;
-
-template<typename T, typename ...Args>
-TUniquePtr<T> MakeUnique(Args&&... args) {
-
-	return std::make_unique<T>(std::forward<Args>(args)...);
+void FDebug::LogVerifyCheckFailed(char const* Fmt, ...)
+{
+	// TODO @gdemers 2024-02-11 Do proper Output logs
+	FConsoleLogger::Log(ELogLevel::ERROR, Fmt);
 }
 
-template<typename T>
-using TSharedPtr = std::shared_ptr<T>;
-
-template<typename T, typename ...Args>
-TSharedPtr<T> MakeShared(Args&&... args) {
-
-	return std::make_shared<T>(std::forward<Args>(args)...);
+char const* FDebug::LogAssertFailed(char const* Fmt, ...)
+{
+	// TODO @gdemers 2024-02-11 Do proper Output logs
+	return "";
 }
-
-template<typename T>
-using TWeakPtr = std::weak_ptr<T>;
-

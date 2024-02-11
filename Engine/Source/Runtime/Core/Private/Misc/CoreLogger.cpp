@@ -18,17 +18,8 @@
 //OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 //SOFTWARE.
 
-#pragma once
+#include "Core/Public/Misc/CoreLogger.h"
 
-#include <stdio.h>
-
-inline void PrintConsole(char const* Fmt, ...) {
-
-	// TODO @gdemers 2024-01-09 Create impl for a console logger, use external lib
-	// and wrap impl details
-
-	// TODO @gdemers 2024-01-09 Unfold variadic arguments later
-	puts(Fmt);
+void FConsoleLogger::Log(ELogLevel Level, char const* Fmt, ...)
+{
 }
-
-#define CONSOLE_LOG(Format, ...) PrintConsole(Format, __VA_ARGS__)

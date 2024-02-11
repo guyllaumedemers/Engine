@@ -53,7 +53,7 @@ static LRESULT CALLBACK WindowProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM l
 	{
 	case WM_CREATE:
 		{
-			CONSOLE_LOG("Window Creation Success!");
+			CONSOLE_LOG(ELogLevel::MESSAGE, "Window Creation Success!");
 		}
 		break;
 	case WM_PAINT:
@@ -74,14 +74,14 @@ static LRESULT CALLBACK WindowProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM l
 
 			if (FPlatformApplication::MakeMessageBox(Definition) == IDOK)
 			{
-				CONSOLE_LOG("Window Close Success!");
+				CONSOLE_LOG(ELogLevel::MESSAGE, "Window Close Success!");
 				DestroyWindow(hwnd);
 			}
 		}
 		return 0;
 	case WM_DESTROY:
 		{
-			CONSOLE_LOG("Window Destroy Begin!");
+			CONSOLE_LOG(ELogLevel::MESSAGE, "Window Destroy Begin!");
 			PostQuitMessage(0);
 			BeginExitRequest();
 		}
@@ -168,9 +168,7 @@ void FWindowsPlatformApplication::PumpMessages() const
 	// -1 result in an error, while 0 exit
 	if(bResult < 0)
 	{
-		// TODO @gdemers 2024-02-10 Process error logs
-		DWORD ErrorMsg = GetLastError();
-		//CONSOLE_LOG("PeekMessage Failure! Error Code:?");
+		CONSOLE_LOG(ELogLevel::MESSAGE, "PeekMessage Failure! Error Code: {0}", GetLastError());
 	}
 }
 
