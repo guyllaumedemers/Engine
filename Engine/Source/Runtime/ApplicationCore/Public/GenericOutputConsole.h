@@ -22,24 +22,17 @@
 
 #include "Core/Public/CoreMinimal.h"
 
-// fwd decl
-class	FGenericWindow;
-struct	FGenericMessageBoxDefinition;
-
 /**
- *	Abstraction. Platform Application. Handle Creation Context for a 'Window' Application and platform messaging.
+ *	Abstraction. Console Application. Handle Creation Context for a 'Console' Application.
  */
-class FGenericPlatformApplication {
+class FGenericOutputConsole {
 
 public:
-	virtual ~FGenericPlatformApplication() = default;
+	virtual ~FGenericOutputConsole() = default;
 
-	static	TSharedPtr<FGenericPlatformApplication>		CreatePlatformApplication() { return nullptr; }
-	virtual TSharedPtr<FGenericWindow>					MakeWindow() = 0;
-	static	int											MakeMessageBox(FGenericMessageBoxDefinition const& InDefinition) { return 0; }
-
-	virtual void PumpMessages() const = 0;
+	static FGenericOutputConsole& Get() { return (*Console); }
+	static void Create() {}
 
 protected:
-	TSet<TSharedPtr<FGenericWindow>>	Windows;
+	static TUniquePtr<FGenericOutputConsole> Console;
 };

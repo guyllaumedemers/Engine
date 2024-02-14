@@ -20,26 +20,29 @@
 
 #pragma once
 
-#include "Core/Public/CoreMinimal.h"
-
-// fwd decl
-class	FGenericWindow;
-struct	FGenericMessageBoxDefinition;
+#include "ApplicationCore/Public/GenericOutputConsole.h"
 
 /**
- *	Abstraction. Platform Application. Handle Creation Context for a 'Window' Application and platform messaging.
+ *	Console Application. Handle Windows 'Console' creation.
  */
-class FGenericPlatformApplication {
+class FWindowsOutputConsole : public FGenericOutputConsole {
 
 public:
-	virtual ~FGenericPlatformApplication() = default;
+	FWindowsOutputConsole();
+	FWindowsOutputConsole(FWindowsOutputConsole const&)				= delete;
+	FWindowsOutputConsole(FWindowsOutputConsole&&)					= default;
+	FWindowsOutputConsole& operator=(FWindowsOutputConsole const&)	= delete;
+	FWindowsOutputConsole& operator=(FWindowsOutputConsole&&)		= default;
+	virtual ~FWindowsOutputConsole() override;
 
-	static	TSharedPtr<FGenericPlatformApplication>		CreatePlatformApplication() { return nullptr; }
-	virtual TSharedPtr<FGenericWindow>					MakeWindow() = 0;
-	static	int											MakeMessageBox(FGenericMessageBoxDefinition const& InDefinition) { return 0; }
-
-	virtual void PumpMessages() const = 0;
-
-protected:
-	TSet<TSharedPtr<FGenericWindow>>	Windows;
+	static void Create();
 };
+
+/**
+ *	Symbol #define. Abstract Conolse type (Window, Linux, Mac) from user.
+ */
+#include "Core/Public/Misc/CoreDefines.h"
+
+#ifdef PLATFORM_WINDOWS
+typedef FWindowsOutputConsole FOutputConsole;
+#endif

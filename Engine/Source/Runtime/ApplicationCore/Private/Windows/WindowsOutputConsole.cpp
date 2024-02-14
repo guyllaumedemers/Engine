@@ -18,28 +18,27 @@
 //OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 //SOFTWARE.
 
-#pragma once
+#include "ApplicationCore/Public/Windows/WindowsOutputConsole.h"
+
+#ifdef PLATFORM_WINDOWS
+
+#include <Windows.h>
 
 #include "Core/Public/CoreMinimal.h"
 
-// fwd decl
-class	FGenericWindow;
-struct	FGenericMessageBoxDefinition;
+FWindowsOutputConsole::FWindowsOutputConsole()
+{
+	check(AllocConsole(), "Console Malloc Failure!");
+}
 
-/**
- *	Abstraction. Platform Application. Handle Creation Context for a 'Window' Application and platform messaging.
- */
-class FGenericPlatformApplication {
+FWindowsOutputConsole::~FWindowsOutputConsole()
+{
+	check(FreeConsole(), "Console MemFree Failure!");
+}
 
-public:
-	virtual ~FGenericPlatformApplication() = default;
+void FWindowsOutputConsole::Create()
+{
+	Console = MakeUnique<FWindowsOutputConsole>();
+}
 
-	static	TSharedPtr<FGenericPlatformApplication>		CreatePlatformApplication() { return nullptr; }
-	virtual TSharedPtr<FGenericWindow>					MakeWindow() = 0;
-	static	int											MakeMessageBox(FGenericMessageBoxDefinition const& InDefinition) { return 0; }
-
-	virtual void PumpMessages() const = 0;
-
-protected:
-	TSet<TSharedPtr<FGenericWindow>>	Windows;
-};
+#endif

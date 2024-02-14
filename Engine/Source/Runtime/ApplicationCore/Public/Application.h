@@ -24,6 +24,7 @@
 
 // fwd decl
 class FGenericPlatformApplication;
+class FGenericWindow;
 
 /**
  *	Core Application. Handle the creation context for the 'Window' Application and
@@ -49,6 +50,7 @@ private:
 	float					GetDelta() const;
 	void					TickPlatform(float const Delta);
 
-	TSharedPtr<FGenericPlatformApplication> Platform = nullptr;
-	static TSharedPtr<FApplication>			Application;
+	TSharedPtr<FGenericPlatformApplication> Platform	= nullptr;
+	TSharedPtr<FGenericWindow>				Window		= nullptr;
+	static TUniquePtr<FApplication>			Application;
 };

@@ -112,7 +112,7 @@ TSharedPtr<FGenericPlatformApplication> FWindowsPlatformApplication::CreatePlatf
 	return MakeShared<FWindowsPlatformApplication>();
 }
 
-bool FWindowsPlatformApplication::MakeWindow(TSharedPtr<FGenericWindow>& OutWindow)
+TSharedPtr<FGenericWindow> FWindowsPlatformApplication::MakeWindow()
 {
 	// TODO @gdemers 2024-02-10 For now, we only ever create a single window. Context Data provided here
 	// represent the Application Window.
@@ -135,13 +135,10 @@ bool FWindowsPlatformApplication::MakeWindow(TSharedPtr<FGenericWindow>& OutWind
 	WindowDefinition.Param				= nullptr;
 
 	auto const Window = MakeShared<FWindowsWindow>();
-	// TODO @gdemers 2024-02-10 Run assertion failure
-	Window->Setup(WindowDefinition);
+	check(Window->Setup(WindowDefinition), "Window Malloc Failure!");
 
 	auto const OutPair	= Windows.insert(Window);
-	OutWindow			= *OutPair.first;
-
-	return OutPair.second;
+	return *OutPair.first;
 }
 
 int FWindowsPlatformApplication::MakeMessageBox(FGenericMessageBoxDefinition const& InDefinition)

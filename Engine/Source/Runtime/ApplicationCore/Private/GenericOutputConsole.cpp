@@ -18,28 +18,6 @@
 //OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 //SOFTWARE.
 
-#pragma once
+#include "ApplicationCore/Public/GenericOutputConsole.h"
 
-#include "Core/Public/CoreMinimal.h"
-
-// fwd decl
-class	FGenericWindow;
-struct	FGenericMessageBoxDefinition;
-
-/**
- *	Abstraction. Platform Application. Handle Creation Context for a 'Window' Application and platform messaging.
- */
-class FGenericPlatformApplication {
-
-public:
-	virtual ~FGenericPlatformApplication() = default;
-
-	static	TSharedPtr<FGenericPlatformApplication>		CreatePlatformApplication() { return nullptr; }
-	virtual TSharedPtr<FGenericWindow>					MakeWindow() = 0;
-	static	int											MakeMessageBox(FGenericMessageBoxDefinition const& InDefinition) { return 0; }
-
-	virtual void PumpMessages() const = 0;
-
-protected:
-	TSet<TSharedPtr<FGenericWindow>>	Windows;
-};
+TUniquePtr<FGenericOutputConsole> FGenericOutputConsole::Console = nullptr;

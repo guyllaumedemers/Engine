@@ -28,19 +28,17 @@
 #endif
 
 // g_var
-TSharedPtr<FApplication> FApplication::Application = nullptr;
+TUniquePtr<FApplication> FApplication::Application = nullptr;
 
 void FApplication::Create()
 {
-	Application				= MakeShared<FApplication>();
+	Application				= MakeUnique<FApplication>();
 	Application->Platform	= FPlatformApplication::CreatePlatformApplication();
 }
 
 void FApplication::MakeWindow()
 {
-	// TODO @gdemers 2024-02-07 Run assertion failure check here
-	TSharedPtr<FGenericWindow> OutWindow;
-	Platform->MakeWindow(OutWindow);
+	Window = Platform->MakeWindow();
 }
 
 void FApplication::Tick()

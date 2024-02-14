@@ -22,8 +22,15 @@
 
 #include "ApplicationCore/Public/Application.h"
 
+#ifdef PLATFORM_WINDOWS
+#include "ApplicationCore/Public/Windows/WindowsOutputConsole.h"
+#endif
+
 int FEngineLoop::PreInit()
 {
+	// create console context
+	FOutputConsole::Create();
+
 	// create application context that configure platform details
 	FApplication::Create();
 

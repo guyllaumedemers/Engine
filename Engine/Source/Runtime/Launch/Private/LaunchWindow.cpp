@@ -26,6 +26,7 @@
 
 // g_var
 HINSTANCE	HInstance	= nullptr;
+PSTR		LpCmdLine	= nullptr;
 int			CmdShow		= 0;
 
 // g_func
@@ -37,6 +38,7 @@ int ENGINE_API LaunchWindowStartup(HINSTANCE hInstance, HINSTANCE hPrevInstance,
 	int ErrorLevel = 0;
 
 	HInstance	= hInstance;
+	LpCmdLine	= lpCmdLine;
 	CmdShow		= nCmdShow;
 
 	// call cross-platform 'main' that startup the engine
