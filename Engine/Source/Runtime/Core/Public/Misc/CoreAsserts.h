@@ -50,7 +50,7 @@ struct ENGINE_API FDebug
 		}
 
 	// Runtime-time assertion w/ debug_break
-	#define check(expr, fmt, ...) CHECK_IMPL(expr, fmt, __VA_ARGS__)
+	#define Check(expr, fmt, ...) CHECK_IMPL(expr, fmt, __VA_ARGS__)
 
 #else
 	#define check(expr, fmt, ...)
@@ -59,7 +59,7 @@ struct ENGINE_API FDebug
 #ifdef __cpp_static_assert
 
 	// Compile-time assertion
-	#define verify(expr, fmt, ...)											\
+	#define Verify(expr, fmt, ...)											\
 		{																	\
 			static_assert(expr, FDebug::LogAssertFailed(fmt, __VA_ARGS__));	\
 		}

@@ -25,7 +25,6 @@
 void FDebug::LogVerifyCheckFailed(char const* Fmt, ...)
 {
 	// TODO @gdemers 2024-02-11 Do proper Output logs
-	FConsoleLogger::Log(ELogLevel::ERROR, Fmt);
 }
 
 char const* FDebug::LogAssertFailed(char const* Fmt, ...)

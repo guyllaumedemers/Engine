@@ -28,12 +28,12 @@
 
 FWindowsOutputConsole::FWindowsOutputConsole()
 {
-	check(AllocConsole(), "Console Malloc Failure!");
+	Check(AllocConsole(), "Console Malloc Failure!");
 }
 
 FWindowsOutputConsole::~FWindowsOutputConsole()
 {
-	check(FreeConsole(), "Console MemFree Failure!");
+	Check(FreeConsole(), "Console MemFree Failure!");
 }
 
 void FWindowsOutputConsole::Create()

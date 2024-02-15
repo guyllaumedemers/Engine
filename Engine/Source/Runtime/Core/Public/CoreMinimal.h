@@ -56,3 +56,9 @@ TSharedPtr<T> MakeShared(Args&&... args) {
 template<typename T>
 using TWeakPtr = std::weak_ptr<T>;
 
+template<typename T, typename Arg>
+T StaticCast(Arg&& Value)
+{
+	return static_cast<T>(Value);
+}
+

@@ -20,6 +20,24 @@
 
 #include "Core/Public/Misc/CoreLogger.h"
 
+#include <cstdarg>
+#include <cstdio>
+
+#include "Core/Public/CoreMinimal.h"
+
 void FConsoleLogger::Log(ELogLevel Level, char const* Fmt, ...)
 {
+	static constexpr char const* const LogLevels[] = { "FATAL", "ERROR", "WARNING", "MESSAGE", "DEBUG", "TRACE" };
+
+	int constexpr MaxBufferSize = 32000;
+	char OutputBuffer[MaxBufferSize] = { 0 };
+
+	__builtin_va_list Argv;
+	va_start(Argv, Fmt);
+	Check(vsnprintf(OutputBuffer, MaxBufferSize, Fmt, Argv), "Log Format Failure!");
+	va_end(Argv);
+
+	// TODO @gdemers 2024-02-14 Add timestamp information
+	// TODO @gdemers 2024-02-14 Target Console Context in which we output - a custom process is built for that in our GenericOutputConsole
+	printf("[h:m:s][%s] : %s", LogLevels[StaticCast<int>(Level)], OutputBuffer);
 }

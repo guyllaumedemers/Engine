@@ -53,7 +53,7 @@ static LRESULT CALLBACK WindowProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM l
 	{
 	case WM_CREATE:
 		{
-			CONSOLE_LOG(ELogLevel::MESSAGE, "Window Creation Success!");
+			CONSOLE_LOG(ELogLevel::LogMessage, "Window Creation Success!");
 		}
 		break;
 	case WM_PAINT:
@@ -74,14 +74,14 @@ static LRESULT CALLBACK WindowProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM l
 
 			if (FPlatformApplication::MakeMessageBox(Definition) == IDOK)
 			{
-				CONSOLE_LOG(ELogLevel::MESSAGE, "Window Close Success!");
+				CONSOLE_LOG(ELogLevel::LogMessage, "Window Close Success!");
 				DestroyWindow(hwnd);
 			}
 		}
 		return 0;
 	case WM_DESTROY:
 		{
-			CONSOLE_LOG(ELogLevel::MESSAGE, "Window Destroy Begin!");
+			CONSOLE_LOG(ELogLevel::LogMessage, "Window Destroy Begin!");
 			PostQuitMessage(0);
 			BeginExitRequest();
 		}
@@ -135,7 +135,7 @@ TSharedPtr<FGenericWindow> FWindowsPlatformApplication::MakeWindow()
 	WindowDefinition.Param				= nullptr;
 
 	auto const Window = MakeShared<FWindowsWindow>();
-	check(Window->Setup(WindowDefinition), "Window Malloc Failure!");
+	Check(Window->Setup(WindowDefinition), "Window Malloc Failure!");
 
 	auto const OutPair	= Windows.insert(Window);
 	return *OutPair.first;
@@ -165,7 +165,7 @@ void FWindowsPlatformApplication::PumpMessages() const
 	// -1 result in an error, while 0 exit
 	if(bResult < 0)
 	{
-		CONSOLE_LOG(ELogLevel::MESSAGE, "PeekMessage Failure! Error Code: {0}", GetLastError());
+		CONSOLE_LOG(ELogLevel::LogMessage, "PeekMessage Failure! Error Code: {0}", GetLastError());
 	}
 }
 
