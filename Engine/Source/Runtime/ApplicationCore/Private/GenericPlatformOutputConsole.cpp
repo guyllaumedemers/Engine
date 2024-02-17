@@ -18,27 +18,6 @@
 //OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 //SOFTWARE.
 
-#include "ApplicationCore/Public/Windows/WindowsOutputConsole.h"
+#include "ApplicationCore/Public/GenericPlatformOutputConsole.h"
 
-#ifdef PLATFORM_WINDOWS
-
-#include <Windows.h>
-
-#include "Core/Public/CoreMinimal.h"
-
-FWindowsOutputConsole::FWindowsOutputConsole()
-{
-	Check(AllocConsole(), "Console Malloc Failure!");
-}
-
-FWindowsOutputConsole::~FWindowsOutputConsole()
-{
-	Check(FreeConsole(), "Console MemFree Failure!");
-}
-
-void FWindowsOutputConsole::Create()
-{
-	Console = MakeUnique<FWindowsOutputConsole>();
-}
-
-#endif
+TUniquePtr<FGenericPlatformOutputConsole> FGenericPlatformOutputConsole::PlatformOutputConsole = nullptr;

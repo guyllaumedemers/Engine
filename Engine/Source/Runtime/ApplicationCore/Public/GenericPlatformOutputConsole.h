@@ -20,29 +20,24 @@
 
 #pragma once
 
-#include "ApplicationCore/Public/GenericOutputConsole.h"
+#include "Core/Public/CoreMinimal.h"
+
+// fwd _decl
+enum class ELogLevel : int;
 
 /**
- *	Console Application. Handle Windows 'Console' creation.
+ *	Abstraction. Console Application. Handle Creation Context for a 'Console' Application.
  */
-class FWindowsOutputConsole : public FGenericOutputConsole {
+class FGenericPlatformOutputConsole {
 
 public:
-	FWindowsOutputConsole();
-	FWindowsOutputConsole(FWindowsOutputConsole const&)				= delete;
-	FWindowsOutputConsole(FWindowsOutputConsole&&)					= default;
-	FWindowsOutputConsole& operator=(FWindowsOutputConsole const&)	= delete;
-	FWindowsOutputConsole& operator=(FWindowsOutputConsole&&)		= default;
-	virtual ~FWindowsOutputConsole() override;
+	virtual ~FGenericPlatformOutputConsole() = default;
 
-	static void Create();
+	static void Create() {}
+	static FGenericPlatformOutputConsole& Get() { return (*PlatformOutputConsole); }
+
+	virtual void WriteOutputConsole(ELogLevel Level, char* const Buffer) {}
+
+protected:
+	static TUniquePtr<FGenericPlatformOutputConsole> PlatformOutputConsole;
 };
-
-/**
- *	Symbol #define. Abstract Conolse type (Window, Linux, Mac) from user.
- */
-#include "Core/Public/Misc/CoreDefines.h"
-
-#ifdef PLATFORM_WINDOWS
-typedef FWindowsOutputConsole FOutputConsole;
-#endif

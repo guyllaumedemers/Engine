@@ -42,12 +42,12 @@ SET windowKitDir="C:\\Program Files (x86)\\Windows Kits\\10\\Lib\\10.0.22621.0\\
 SET windowCrt="C:\\Program Files (x86)\\Windows Kits\\10\\Lib\\10.0.22621.0\\ucrt\\x64"
 
 SET assembly=Engine
-SET compilerFlags=/std:c++17 /Ob1 /Y- /Zi /Wall /showFilenames
+SET compilerFlags=/std:c++17 /Ob1 /Y- /Zi /Wall /showFilenames /EHa
 SET includeFlags=/IRuntime
 SET linkerLibs=msvcrtd.lib vcruntimed.lib ucrtd.lib kernel32.lib user32.lib msvcprtd.lib
 SET linkerFlags=/MACHINE:X64 /DEBUG /NODEFAULTLIB /DLL /VERBOSE:LIB
 SET linkerPaths=/LIBPATH:%msvcDir% /LIBPATH:%windowKitDir% /LIBPATH:%windowCrt%
-SET defines=/D_DEBUG /DUNICODE /DDCLSPEC_EXPORT /D_CRT_SECURE_NO_WARNINGS
+SET defines=/D_DEBUG /DDCLSPEC_EXPORT /D_CRT_SECURE_NO_WARNINGS
 
 ECHO "Building %assembly%..."
 clang-cl %defines% %includeFlags% %compilerFlags% %cppFilenames% -o ..\\..\\out\\%assembly%.dll /link %linkerLibs% %linkerPaths% %linkerFlags%

@@ -20,19 +20,30 @@
 
 #pragma once
 
-#include "Core/Public/CoreMinimal.h"
+#include "ApplicationCore/Public/GenericPlatformOutputConsole.h"
 
 /**
- *	Abstraction. Console Application. Handle Creation Context for a 'Console' Application.
+ *	Console Application. Handle Windows 'Console' creation.
  */
-class FGenericOutputConsole {
+class FWindowsPlatformOutputConsole : public FGenericPlatformOutputConsole {
 
 public:
-	virtual ~FGenericOutputConsole() = default;
+	FWindowsPlatformOutputConsole();
+	FWindowsPlatformOutputConsole(FWindowsPlatformOutputConsole const&)				= delete;
+	FWindowsPlatformOutputConsole(FWindowsPlatformOutputConsole&&)					= default;
+	FWindowsPlatformOutputConsole& operator=(FWindowsPlatformOutputConsole const&)	= delete;
+	FWindowsPlatformOutputConsole& operator=(FWindowsPlatformOutputConsole&&)		= default;
+	virtual ~FWindowsPlatformOutputConsole() override;
 
-	static FGenericOutputConsole& Get() { return (*Console); }
-	static void Create() {}
-
-protected:
-	static TUniquePtr<FGenericOutputConsole> Console;
+	static void Create();
+	virtual void WriteOutputConsole(ELogLevel Level, char* const Buffer) override;
 };
+
+/**
+ *	Symbol #define. Abstract Console type (Window, Linux, Mac) from user.
+ */
+#include "Core/Public/Misc/CoreDefines.h"
+
+#ifdef PLATFORM_WINDOWS
+typedef FWindowsPlatformOutputConsole FPlatformOutputConsole;
+#endif

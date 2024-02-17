@@ -23,7 +23,7 @@
 #include "Core/Public/Misc/CoreDefines.h"
 
 // fwd _decl
-enum class ENGINE_API ELogLevel : int;
+enum class ELogLevel : int;
 
 /**
  *	Context Object. Provide logging API.
@@ -31,6 +31,14 @@ enum class ENGINE_API ELogLevel : int;
 struct ENGINE_API FConsoleLogger {
 
 	static void Log(ELogLevel Level, char const* Fmt, ...);
+};
+
+/**
+ *	Context Object. Provide logging API.
+ */
+struct ENGINE_API FFileLogger {
+
+	static void Push(char const* Fmt, ...);
 };
 
 /**

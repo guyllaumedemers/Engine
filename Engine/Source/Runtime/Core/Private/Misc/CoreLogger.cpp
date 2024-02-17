@@ -25,19 +25,77 @@
 
 #include "Core/Public/CoreMinimal.h"
 
+#ifdef PLATFORM_WINDOWS
+#include "ApplicationCore/Public/Windows/WindowsPlatformOutputConsole.h"
+#endif
+
+char const* GetTimestamp()
+{
+	return "h:m:s";
+}
+
 void FConsoleLogger::Log(ELogLevel Level, char const* Fmt, ...)
 {
 	static constexpr char const* const LogLevels[] = { "FATAL", "ERROR", "WARNING", "MESSAGE", "DEBUG", "TRACE" };
 
-	int constexpr MaxBufferSize = 32000;
-	char OutputBuffer[MaxBufferSize] = { 0 };
+	int constexpr	MaxBufferSize				= 32000;
+	char			OutputBuffer[MaxBufferSize] = { 0 };
 
-	__builtin_va_list Argv;
-	va_start(Argv, Fmt);
-	Check(vsnprintf(OutputBuffer, MaxBufferSize, Fmt, Argv), "Log Format Failure!");
-	va_end(Argv);
-
+	va_list Argv;
 	// TODO @gdemers 2024-02-14 Add timestamp information
 	// TODO @gdemers 2024-02-14 Target Console Context in which we output - a custom process is built for that in our GenericOutputConsole
-	printf("[h:m:s][%s] : %s", LogLevels[StaticCast<int>(Level)], OutputBuffer);
+	char const* Timestamp = GetTimestamp();
+
+	try
+	{
+		va_start(Argv, Fmt);
+		bool const bResult = vsnprintf_s(OutputBuffer, MaxBufferSize, Fmt, Argv);
+		va_end(Argv);
+	}
+	catch (std::exception const& Exception)
+	{
+		char OutputTrace[MaxBufferSize] = { 0 };
+
+		bool const bResult = sprintf_s(OutputTrace, "[%s][%s] : %s, line:%i, exception_type:%s", Timestamp,
+			LogLevels[StaticCast<int>(ELogLevel::LogFatal)],
+			__FILE__,
+			__LINE__,
+			Exception.what());
+
+		FFileLogger::Push(OutputTrace);
+		va_end(Argv);
+
+		return;
+	}
+
+	char OutputBuffer2[MaxBufferSize] = { 0 };
+	try
+	{
+		bool const bResult = sprintf_s(OutputBuffer2, "[%s][%s] : %s", Timestamp, LogLevels[StaticCast<int>(Level)], OutputBuffer);
+	}
+	catch (std::exception const& Exception)
+	{
+		char OutputTrace[MaxBufferSize] = { 0 };
+
+		bool const bResult = sprintf_s(OutputTrace, "[%s][%s] : %s, line:%i, exception_type:%s", Timestamp,
+			LogLevels[StaticCast<int>(ELogLevel::LogFatal)],
+			__FILE__,
+			__LINE__,
+			Exception.what());
+
+		FFileLogger::Push(OutputTrace);
+
+		return;
+	}
+
+	// output formatted message to platform console
+	FGenericPlatformOutputConsole::Get().WriteOutputConsole(Level, OutputBuffer2);
+
+	// output formatted message to trace file
+	FFileLogger::Push(OutputBuffer2);
+}
+
+void FFileLogger::Push(char const* Fmt, ...)
+{
+	// TODO @gdemers 2024-02-17 Capture message and add it to Queue so we can write to input stream once on exit or before crash
 }
