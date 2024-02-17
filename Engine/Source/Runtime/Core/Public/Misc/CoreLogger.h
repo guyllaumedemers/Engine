@@ -21,16 +21,17 @@
 #pragma once
 
 #include "Core/Public/Misc/CoreDefines.h"
+#include "Core/Public/Misc/StringMisc.h"
 
 // fwd _decl
-enum class ELogLevel : int;
+enum class ELogLevel;
 
 /**
  *	Context Object. Provide logging API.
  */
 struct ENGINE_API FConsoleLogger {
 
-	static void Log(ELogLevel Level, char const* Fmt, ...);
+	static void Log(ELogLevel Level, FString const& Fmt, ...);
 };
 
 /**
@@ -38,13 +39,13 @@ struct ENGINE_API FConsoleLogger {
  */
 struct ENGINE_API FFileLogger {
 
-	static void Push(char const* Fmt, ...);
+	static void Push(FString const& Fmt, ...);
 };
 
 /**
  *	State Object.
  */
-enum class ENGINE_API ELogLevel : int
+enum class ENGINE_API ELogLevel
 {
 	LogFatal = 0,
 	LogError,

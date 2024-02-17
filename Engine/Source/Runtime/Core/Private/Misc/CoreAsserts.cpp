@@ -20,15 +20,12 @@
 
 #include "Core/Public/Misc/CoreAsserts.h"
 
-#include "Core/Public/Misc/CoreLogger.h"
-
-void FDebug::LogVerifyCheckFailed(char const* Fmt, ...)
+void FDebug::LogVerifyCheckFailed(FString const& Fmt, ...)
 {
 	// TODO @gdemers 2024-02-11 Do proper Output logs
 }
 
-char const* FDebug::LogAssertFailed(char const* Fmt, ...)
+void FDebug::LogAssertFailed(FString const& Fmt, ...)
 {
 	// TODO @gdemers 2024-02-11 Do proper Output logs
-	return "";
 }

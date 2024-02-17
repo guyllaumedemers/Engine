@@ -21,14 +21,15 @@
 #pragma once
 
 #include "Core/Public/Misc/CoreDefines.h"
+#include "Core/Public/Misc/StringMisc.h"
 
 /**
  *	Context Object. Abstract LogInfo from exported symbols.
  */
 struct ENGINE_API FDebug
 {
-	static void LogVerifyCheckFailed	(char const* Fmt, ...);
-	static char const* LogAssertFailed	(char const* Fmt, ...);
+	static void LogVerifyCheckFailed(FString const& Fmt, ...);
+	static void LogAssertFailed		(FString const& Fmt, ...);
 };
 
 #ifdef ASSERT_ENABLED
@@ -53,7 +54,7 @@ struct ENGINE_API FDebug
 	#define Check(expr, fmt, ...) CHECK_IMPL(expr, fmt, __VA_ARGS__)
 
 #else
-	#define check(expr, fmt, ...)
+	#define Check(expr, fmt, ...)
 #endif
 
 #ifdef __cpp_static_assert
@@ -65,5 +66,6 @@ struct ENGINE_API FDebug
 		}
 
 #else
-#error "CppRuntime library doesn't support assertion symbols! Curr_version < C++11."
+	#error "CppRuntime library doesn't support compile-time assertion symbols! Curr_version < C++11."
+	#define Verify(expr, fmt, ...)	
 #endif

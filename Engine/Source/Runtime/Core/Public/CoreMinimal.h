@@ -28,6 +28,7 @@
 
 #include "Core/Public/Misc/CoreAsserts.h"
 #include "Core/Public/Misc/CoreLogger.h"
+#include "Core/Public/Misc/StringMisc.h"
 
 template<typename TKey, typename TValue>
 using TMap = std::unordered_map<TKey, TValue>;

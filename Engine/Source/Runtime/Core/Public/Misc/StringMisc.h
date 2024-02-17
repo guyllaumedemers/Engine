@@ -20,24 +20,30 @@
 
 #pragma once
 
-#include "Core/Public/CoreMinimal.h"
+#include "Core/Public/Misc/CoreDefines.h"
 
-// fwd _decl
-enum class ELogLevel;
+// TODO @gdemers 2024-02-17 Update once we tackle allocators
+// g_var
+static constexpr int MaxBufferSize = 32000;
 
 /**
- *	Abstraction. Console Application. Handle Creation Context for a 'Console' Application.
+ *	Basic type. Handle ANSI, UNICODE encoding.
  */
-class FGenericPlatformOutputConsole {
+class FString {
 
 public:
-	virtual ~FGenericPlatformOutputConsole() = default;
+	// TODO @gdemers 2024-02-17 Expect to be able to react to platform encoding changes and process
+	// string literals in logs without problem!
+	FString(ANSICHAR const* String);
+	FString(WIDECHAR const* String);
 
-	static void Create() {}
-	static FGenericPlatformOutputConsole& Get() { return (*PlatformOutputConsole); }
+	int Length() const;
 
-	virtual void WriteOutputConsole(ELogLevel Level, FString const& Buffer) {}
+	TCHAR const* operator*() const noexcept
+	{
+		return Data;
+	}
 
-protected:
-	static TUniquePtr<FGenericPlatformOutputConsole> PlatformOutputConsole;
+private:
+	TCHAR Data[32];
 };

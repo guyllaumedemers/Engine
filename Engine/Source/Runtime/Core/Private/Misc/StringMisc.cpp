@@ -18,26 +18,35 @@
 //OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 //SOFTWARE.
 
-#pragma once
+#include "Core/Public/Misc/StringMisc.h"
 
-#include "Core/Public/CoreMinimal.h"
+// TODO @gdemers 2024-02-17 Remove reference to C++ lib and handle string length calculation
+// differently
+#include <cstring>
+#ifdef UNICODE
 
-// fwd _decl
-enum class ELogLevel;
+#define STRLEN(Buffer, MaxCount) wcsnlen_s(Buffer, MaxCount)
+#define STRCPY(Dest, Src) wcscpy_s(Dest, Src)
 
-/**
- *	Abstraction. Console Application. Handle Creation Context for a 'Console' Application.
- */
-class FGenericPlatformOutputConsole {
+#else
 
-public:
-	virtual ~FGenericPlatformOutputConsole() = default;
+#define STRLEN(Buffer, MaxCount) strnlen_s(Buffer, MaxCount)
+#define STRCPY(Dest, Src) strcpy_s(Dest, Src)
 
-	static void Create() {}
-	static FGenericPlatformOutputConsole& Get() { return (*PlatformOutputConsole); }
+#endif
 
-	virtual void WriteOutputConsole(ELogLevel Level, FString const& Buffer) {}
+FString::FString(ANSICHAR const* String)
+{
+	// TODO @gdemers 2024-02-17 Need for dynamic arrays here. Otherwise will require rework
+	// https://learn.microsoft.com/en-us/cpp/text/how-to-convert-between-various-string-types?view=msvc-170
+}
 
-protected:
-	static TUniquePtr<FGenericPlatformOutputConsole> PlatformOutputConsole;
-};
+FString::FString(WIDECHAR const* String)
+{
+	STRCPY(Data, String);
+}
+
+int FString::Length() const
+{
+	return STRLEN(Data, MaxBufferSize);
+}

@@ -20,17 +20,13 @@
 
 #pragma once
 
+#include "Core/Public/Misc/PlatformTypes.h"
+
 #if defined(_WIN32) || defined(__WIN32__) || defined(WIN32)
 
 	// create macro for caching platform target
 	#ifndef PLATFORM_WINDOWS
 	#define PLATFORM_WINDOWS
-	#endif
-
-	// TODO @gdemers 2024-02-11 Determine where UNICODE or ANSI has to be set
-	// might not be platform specific ?
-	#ifndef UNICODE
-	#define UNICODE
 	#endif
 
 	#if DCLSPEC_EXPORT
@@ -51,4 +47,15 @@
 	// enable debugging flag
 	#define DEBUGGING_ENABLED
 
+#endif
+
+typedef FGenericPlatformTypes::ANSICHAR ANSICHAR;
+typedef FGenericPlatformTypes::WIDECHAR WIDECHAR;
+
+#if defined(_UNICODE) || defined(__UNICODE__) || defined(UNICODE)
+
+	#define TCHAR WIDECHAR
+#else
+
+	#define TCHAR ANSICHAR
 #endif

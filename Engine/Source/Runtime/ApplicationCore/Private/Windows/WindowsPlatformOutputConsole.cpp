@@ -39,7 +39,7 @@ void FWindowsPlatformOutputConsole::Create()
 	PlatformOutputConsole = MakeUnique<FWindowsPlatformOutputConsole>();
 }
 
-void FWindowsPlatformOutputConsole::WriteOutputConsole(ELogLevel Level, char* const Buffer)
+void FWindowsPlatformOutputConsole::WriteOutputConsole(ELogLevel Level, FString const& Buffer)
 {
 	HANDLE const HConsole = GetStdHandle(STD_OUTPUT_HANDLE);
 
@@ -66,11 +66,11 @@ void FWindowsPlatformOutputConsole::WriteOutputConsole(ELogLevel Level, char* co
 	// set expected color attributes
 	SetConsoleTextAttribute(HConsole, BufferAttributes);
 
-	// TODO @gdemers 2024-02-17 Investigate on the differences between char and wchar and the impact on platforms
-	DWORD const	Length				= (DWORD)strnlen_s(Buffer, MAXDWORD32);
+	DWORD const	Length				= (DWORD)Buffer.Length();
 	LPDWORD		TotalCharWritten	= nullptr;
 
-	WriteConsole(HConsole, Buffer, Length, TotalCharWritten, nullptr);
+	// https://learn.microsoft.com/en-us/windows/console/writeconsole
+	WriteConsole(HConsole, *Buffer, Length, TotalCharWritten, nullptr);
 
 	// revert color attributes
 	SetConsoleTextAttribute(HConsole, PreviousBufferInfo.wAttributes);

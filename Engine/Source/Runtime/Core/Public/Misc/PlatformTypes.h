@@ -20,24 +20,13 @@
 
 #pragma once
 
-#include "Core/Public/CoreMinimal.h"
+struct FGenericPlatformTypes {
 
-// fwd _decl
-enum class ELogLevel;
+	// https://learn.microsoft.com/en-us/cpp/cpp/string-and-character-literals-cpp?view=msvc-170
 
-/**
- *	Abstraction. Console Application. Handle Creation Context for a 'Console' Application.
- */
-class FGenericPlatformOutputConsole {
+	// ANSI		character
+	typedef char ANSICHAR;
 
-public:
-	virtual ~FGenericPlatformOutputConsole() = default;
-
-	static void Create() {}
-	static FGenericPlatformOutputConsole& Get() { return (*PlatformOutputConsole); }
-
-	virtual void WriteOutputConsole(ELogLevel Level, FString const& Buffer) {}
-
-protected:
-	static TUniquePtr<FGenericPlatformOutputConsole> PlatformOutputConsole;
+	// UNICODE character
+	typedef wchar_t WIDECHAR;
 };

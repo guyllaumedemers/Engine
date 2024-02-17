@@ -8,7 +8,6 @@
       },
       "defines": [
         "UNICODE",
-        "_UNICODE",
         "_DEBUG",
         "WIN32",
         "PLATFORM_WINDOWS",
