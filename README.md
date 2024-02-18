@@ -10,7 +10,7 @@ A `Sandbox` project built for engine development. Objective being that `Core` sy
 
 #### What this README.md is not
 
-Be aware that this project is greatly influenced by `Unreal Engine` as this is an industry standard and a **GREAT** study case for learning cross-platform development, system architecture, and more... Even though the aim of this project remains writing good `code`, code architecture might not always respect best practices or be optimized.
+Be aware that this project is greatly influenced by `Unreal Engine` as this is an industry standard and a **GREAT** study case for learning cross-platform development, system architecture, and more...
 
 ## An introduction to Cross-platform
 
