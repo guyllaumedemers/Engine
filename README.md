@@ -1,25 +1,23 @@
-# Opengl-Danmaku
+# Engine
 
-### Danmaku, Bullet hell
+### Game Engine, Application Framework
 
-**Wikipedia** : "Bullet hell (danmaku, literally "barrage" or "bullet curtain"), also known as manic shooter, is a subgenre of shoot 'em up video games featuring large amounts of projectiles the player character is required to dodge."
+**Wikipedia** : "A game engine is a software framework primarily designed for the development of video games and generally includes relevant libraries and support programs such as a level editor."
 
 #### Project
 
-A `Sandbox` project built with Multithreading support. Objective being that `Core` systems manage their entities concurently for better performance. Additionaly, tooling will be provided to ease the testing process in the creation of complex `Danmaku`.
+A `Sandbox` project built for engine development. Objective being that `Core` systems can be reused accross multiple projects and provide an `Application Framework` that's robuste. Additionaly, tooling will be provided to ease the testing of specific systems and offer extendable features that can be implemented in project specific use cases.
 
 #### What this README.md is not
 
-Be aware that this project isn't about building a `Game Engine`, explaining `Build system` or `Multithreading`. Even though the aim remains writing good `code`, code architecture might not always respect best practices or be optimized.
+Be aware that this project is greatly influenced by `Unreal Engine` as this is an industry standard and a **GREAT** study case for learning cross-platform development, system architecture, and more... Even though the aim of this project remains writing good `code`, code architecture might not always respect best practices or be optimized.
 
-## JIRA
+## An introduction to Cross-platform
 
-// TODO
-
-### Danmaku
-
-In this [guide](https://sparen.github.io/ph3tutorials/ddsga2.html), we will discuss the role angles play in bullet movement as well as how bullet graphic choice affects the aesthetics of a pattern, as well as how Bullet Hell games differ from other shmups.
+**Wikipedia** : "In computing, cross-platform software (also called multi-platform software, platform-agnostic software, or platform-independent software) is computer software that is designed to work in several computing platforms."
 
 ### Platform layer
 
-![platform_layer](https://github.com/guyllaumedemers/Opengl-Danmaku/blob/master/Resources/OS_architecture.png)
+**Wikipedia** : "A computing platform, digital platform, or software platform is an environment in which software is executed. It may be the hardware or the operating system (OS), a web browser and associated application programming interfaces, or other underlying software, as long as the program code is executed using the services provided by the platform. Computing platforms have different abstraction levels, including a computer architecture, an OS, or runtime libraries."
+
+![platform_layer](https://github.com/guyllaumedemers/Engine/blob/master/Resources/OS_architecture.png)
