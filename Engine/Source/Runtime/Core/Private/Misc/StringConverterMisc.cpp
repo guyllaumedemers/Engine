@@ -18,42 +18,28 @@
 //OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 //SOFTWARE.
 
-#include "Core/Public/Misc/StringMisc.h"
+#include "StringConverterMisc.h"
 
 // TODO @gdemers 2024-02-17 Remove reference to C++ lib and handle string length calculation
 // differently
-#include <cstdlib>
 #include <cstring>
+#include <stdlib.h>
 
-#include "StringConverterMisc.h"
+extern int MaxBufferSize;
 
-#ifdef UNICODE
-
-#define STRLEN(Buffer, MaxCount) wcsnlen_s(Buffer, MaxCount)
-#define STRCPY(Dest, Src) wcscpy_s(Dest, Src)
-
-#else
-
-#define STRLEN(Buffer, MaxCount) strnlen_s(Buffer, MaxCount)
-#define STRCPY(Dest, Src) strcpy_s(Dest, Src)
-
-#endif
-
-// TODO @gdemers 2024-02-17 Update once we tackle allocators
-// g_var
-int MaxBufferSize = 32000;
-
-FString::FString(ANSICHAR const* String)
+WIDECHAR* FStringMisc::Convert(ANSICHAR const* Source)
 {
-	STRCPY(Data, FStringMisc::Convert(String));
+	size_t const Size = strnlen_s(Source, MaxBufferSize) + 1;
+
+	WIDECHAR* Dest = new WIDECHAR[MaxBufferSize];
+	size_t TotalCharConverted = 0;
+
+	mbstowcs_s(&TotalCharConverted, Dest, Size, Source, _TRUNCATE);
+
+	return Dest;
 }
 
-FString::FString(WIDECHAR const* String)
+WIDECHAR* FStringMisc::Convert(WIDECHAR const* Source)
 {
-	STRCPY(Data, FStringMisc::Convert(String));
-}
-
-int FString::Length() const
-{
-	return STRLEN(Data, MaxBufferSize);
+	return const_cast<WIDECHAR*>(Source);
 }

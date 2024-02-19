@@ -49,7 +49,8 @@ int ENGINE_API LaunchWindowStartup(HINSTANCE hInstance, HINSTANCE hPrevInstance,
 
 void ENGINE_API LaunchWindowShutdown() {
 
-
+	// win32 handle releasing resources
+	HInstance = nullptr;
 }
 
 #endif

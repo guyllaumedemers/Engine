@@ -25,6 +25,7 @@
 #include <Windows.h>
 
 #include "ApplicationCore/Public/Windows/WindowsWindow.h"
+#include "ApplicationCore/Public/Windows/WindowsPlatformOutputConsole.h"
 #include "Core/Public/CoreMinimal.h"
 
 // g_func
@@ -53,7 +54,7 @@ static LRESULT CALLBACK WindowProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM l
 	{
 	case WM_CREATE:
 		{
-			CONSOLE_LOG(ELogLevel::LogMessage, "Window Creation Success!");
+			CONSOLE_LOG(ELogLevel::LogMessage, L"Window Creation Success!");
 		}
 		break;
 	case WM_PAINT:
@@ -74,14 +75,13 @@ static LRESULT CALLBACK WindowProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM l
 
 			if (FPlatformApplication::MakeMessageBox(Definition) == IDOK)
 			{
-				CONSOLE_LOG(ELogLevel::LogMessage, "Window Close Success!");
+				FPlatformOutputConsole::Destroy();
 				DestroyWindow(hwnd);
 			}
 		}
 		return 0;
 	case WM_DESTROY:
 		{
-			CONSOLE_LOG(ELogLevel::LogMessage, "Window Destroy Begin!");
 			PostQuitMessage(0);
 			BeginExitRequest();
 		}

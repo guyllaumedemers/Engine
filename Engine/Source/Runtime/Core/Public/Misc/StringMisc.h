@@ -22,10 +22,6 @@
 
 #include "Core/Public/Misc/CoreDefines.h"
 
-// TODO @gdemers 2024-02-17 Update once we tackle allocators
-// g_var
-static constexpr int MaxBufferSize = 32000;
-
 /**
  *	Basic type. Handle ANSI, UNICODE encoding.
  */
@@ -45,5 +41,5 @@ public:
 	}
 
 private:
-	TCHAR Data[32];
+	TCHAR Data[3200];
 };

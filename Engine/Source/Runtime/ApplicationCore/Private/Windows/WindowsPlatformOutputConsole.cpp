@@ -39,9 +39,19 @@ void FWindowsPlatformOutputConsole::Create()
 	PlatformOutputConsole = MakeUnique<FWindowsPlatformOutputConsole>();
 }
 
+void FWindowsPlatformOutputConsole::Destroy()
+{
+	CONSOLE_LOG(ELogLevel::LogMessage, "Console Destroy Begin!");
+	PlatformOutputConsole.reset();
+}
+
 void FWindowsPlatformOutputConsole::WriteOutputConsole(ELogLevel Level, FString const& Buffer)
 {
 	HANDLE const HConsole = GetStdHandle(STD_OUTPUT_HANDLE);
+	if(HConsole == nullptr)
+	{
+		return;
+	}
 
 	CONSOLE_SCREEN_BUFFER_INFO PreviousBufferInfo{};
 	GetConsoleScreenBufferInfo(HConsole, &PreviousBufferInfo);

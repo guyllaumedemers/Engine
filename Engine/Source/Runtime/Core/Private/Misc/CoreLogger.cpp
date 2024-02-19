@@ -69,6 +69,11 @@ namespace
 
 #endif
 
+namespace
+{
+	constexpr static int const MaxBufferSize = 3200;
+}
+
 void FConsoleLogger::Log(ELogLevel Level, FString const& Fmt, ...)
 {
 	static TCHAR const** LogLevels = GetLogLevels();

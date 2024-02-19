@@ -18,42 +18,18 @@
 //OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 //SOFTWARE.
 
-#include "Core/Public/Misc/StringMisc.h"
+#pragma once
 
-// TODO @gdemers 2024-02-17 Remove reference to C++ lib and handle string length calculation
-// differently
-#include <cstdlib>
-#include <cstring>
+#include "Core/Public/Misc/CoreDefines.h"
 
-#include "StringConverterMisc.h"
+/**
+ *	 Helper Object. Offers ANSI, UNICODE encoding conversion api.
+ */
+class FStringMisc {
 
-#ifdef UNICODE
+public:
 
-#define STRLEN(Buffer, MaxCount) wcsnlen_s(Buffer, MaxCount)
-#define STRCPY(Dest, Src) wcscpy_s(Dest, Src)
-
-#else
-
-#define STRLEN(Buffer, MaxCount) strnlen_s(Buffer, MaxCount)
-#define STRCPY(Dest, Src) strcpy_s(Dest, Src)
-
-#endif
-
-// TODO @gdemers 2024-02-17 Update once we tackle allocators
-// g_var
-int MaxBufferSize = 32000;
-
-FString::FString(ANSICHAR const* String)
-{
-	STRCPY(Data, FStringMisc::Convert(String));
-}
-
-FString::FString(WIDECHAR const* String)
-{
-	STRCPY(Data, FStringMisc::Convert(String));
-}
-
-int FString::Length() const
-{
-	return STRLEN(Data, MaxBufferSize);
-}
+	// https://learn.microsoft.com/en-us/cpp/text/how-to-convert-between-various-string-types?view=msvc-170
+	static TCHAR* Convert(ANSICHAR const* Source);
+	static TCHAR* Convert(WIDECHAR const* Source);
+};
