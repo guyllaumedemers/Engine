@@ -34,7 +34,6 @@ public:
 	virtual ~FGenericPlatformOutputConsole() = default;
 
 	static void Create() {}
-	static void Destroy() {}
 	static FGenericPlatformOutputConsole& Get() { return (*PlatformOutputConsole); }
 
 	virtual void WriteOutputConsole(ELogLevel Level, FString const& Buffer) {}

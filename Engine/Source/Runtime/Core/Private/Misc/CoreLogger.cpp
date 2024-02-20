@@ -98,7 +98,7 @@ void FConsoleLogger::Log(ELogLevel Level, FString const& Fmt, ...)
 		TCHAR OutputTrace[MaxBufferSize] = { 0 };
 
 		bool const bResult = FORMAT_LIST(OutputTrace, L"[%s][%s] : %s, line:%i, exception_type:%s", Timestamp,
-			*((LogLevels)+StaticCast<int>(ELogLevel::LogFatal) * sizeof(TCHAR)),
+			LogLevels[StaticCast<int>(ELogLevel::LogFatal)],
 			__FILE__,
 			__LINE__,
 			Exception.what());
@@ -116,7 +116,7 @@ void FConsoleLogger::Log(ELogLevel Level, FString const& Fmt, ...)
 	TCHAR OutputBuffer2[MaxBufferSize] = { 0 };
 	try
 	{
-		bool const bResult = FORMAT_LIST(OutputBuffer2, L"[%s][%s] : %s", Timestamp, *((LogLevels)+StaticCast<int>(Level) * sizeof(TCHAR)), OutputBuffer);
+		bool const bResult = FORMAT_LIST(OutputBuffer2, L"[%s][%s] : %s", Timestamp, LogLevels[StaticCast<int>(Level)], OutputBuffer);
 		if (bResult)
 		{
 			// output formatted message to platform console
@@ -131,7 +131,7 @@ void FConsoleLogger::Log(ELogLevel Level, FString const& Fmt, ...)
 		TCHAR OutputTrace[MaxBufferSize] = { 0 };
 
 		bool const bResult = FORMAT_LIST(OutputTrace, L"[%s][%s] : %s, line:%i, exception_type:%s", Timestamp,
-			*((LogLevels)+StaticCast<int>(ELogLevel::LogFatal) * sizeof(TCHAR)),
+			LogLevels[StaticCast<int>(ELogLevel::LogFatal)],
 			__FILE__,
 			__LINE__,
 			Exception.what());

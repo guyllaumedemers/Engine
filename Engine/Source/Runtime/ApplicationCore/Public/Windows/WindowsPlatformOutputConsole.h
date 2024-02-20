@@ -36,7 +36,6 @@ public:
 	virtual ~FWindowsPlatformOutputConsole() override;
 
 	static void Create();
-	static void Destroy();
 	virtual void WriteOutputConsole(ELogLevel Level, FString const& Buffer) override;
 };
 

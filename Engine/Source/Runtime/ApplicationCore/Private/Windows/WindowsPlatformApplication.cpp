@@ -75,7 +75,6 @@ static LRESULT CALLBACK WindowProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM l
 
 			if (FPlatformApplication::MakeMessageBox(Definition) == IDOK)
 			{
-				FPlatformOutputConsole::Destroy();
 				DestroyWindow(hwnd);
 			}
 		}
