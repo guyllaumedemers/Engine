@@ -38,8 +38,3 @@ WIDECHAR* FStringMisc::Convert(ANSICHAR const* Source)
 
 	return Dest;
 }
-
-WIDECHAR* FStringMisc::Convert(WIDECHAR const* Source)
-{
-	return const_cast<WIDECHAR*>(Source);
-}

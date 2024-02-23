@@ -23,23 +23,19 @@
 #include <cstdarg>
 #include <cstdio>
 
+#include "StringConverterMisc.h"
 #include "Core/Public/CoreMinimal.h"
 
 #ifdef PLATFORM_WINDOWS
 #include "ApplicationCore/Public/Windows/WindowsPlatformOutputConsole.h"
 #endif
 
-#ifdef UNICODE
-
-#define FORMAT_VA_LIST(Buffer, Count, Format, Argv) vswprintf_s(Buffer, Count, Format, Argv)
-#define FORMAT_LIST(Buffer, Format, ...) swprintf_s(Buffer, Format, __VA_ARGS__)
-
 namespace
 {
-	static TCHAR const** GetLogLevels()
+	static TCHAR const* GetLogLevels(ELogLevel Level)
 	{
-		static TCHAR const* LogLevels[] = { L"FATAL", L"ERROR", L"WARNING", L"MESSAGE", L"DEBUG", L"TRACE" };
-		return LogLevels;
+		static FString const LogLevels[] = { "FATAL", "ERROR", "WARNING", "DEBUG", "TRACE", "MESSAGE" };
+		return *LogLevels[StaticCast<int>(Level)];
 	}
 
 	static TCHAR const* GetTimestamp()
@@ -48,27 +44,6 @@ namespace
 	}
 }
 
-#else
-
-#define FORMAT_VA_LIST(Buffer, Count, Format, Argv) vsnprintf_s(Buffer, Count, Format, Argv)
-#define FORMAT_LIST(Buffer, Format, ...) sprintf_s(Buffer, Format, __VA_ARGS__)
-
-namespace
-{
-	static TCHAR const** GetLogLevels()
-	{
-		static TCHAR const* LogLevels[] = { "FATAL", "ERROR", "WARNING", "MESSAGE", "DEBUG", "TRACE" };
-		return LogLevels;
-	}
-
-	static TCHAR const* GetTimestamp()
-	{
-		return "h:m:s";
-	}
-}
-
-#endif
-
 namespace
 {
 	constexpr static int const MaxBufferSize = 3200;
@@ -76,11 +51,10 @@ namespace
 
 void FConsoleLogger::Log(ELogLevel Level, FString const& Fmt, ...)
 {
-	static TCHAR const** LogLevels = GetLogLevels();
-
 	TCHAR OutputBuffer[MaxBufferSize] = { 0 };
 
 	va_list Argv;
+	TCHAR const* LogLevel = GetLogLevels(Level);
 	// TODO @gdemers 2024-02-14 Add timestamp information
 	// TODO @gdemers 2024-02-14 Target Console Context in which we output - a custom process is built for that in our GenericOutputConsole
 	TCHAR const* Timestamp = GetTimestamp();
@@ -97,8 +71,8 @@ void FConsoleLogger::Log(ELogLevel Level, FString const& Fmt, ...)
 	{
 		TCHAR OutputTrace[MaxBufferSize] = { 0 };
 
-		bool const bResult = FORMAT_LIST(OutputTrace, L"[%s][%s] : %s, line:%i, exception_type:%s", Timestamp,
-			LogLevels[StaticCast<int>(ELogLevel::LogFatal)],
+		bool const bResult = FStringMisc::Format(OutputTrace, MaxBufferSize, "[%s][%s] : %s, line:%i, exception_type:%s", Timestamp,
+			LogLevel,
 			__FILE__,
 			__LINE__,
 			Exception.what());
@@ -116,7 +90,7 @@ void FConsoleLogger::Log(ELogLevel Level, FString const& Fmt, ...)
 	TCHAR OutputBuffer2[MaxBufferSize] = { 0 };
 	try
 	{
-		bool const bResult = FORMAT_LIST(OutputBuffer2, L"[%s][%s] : %s", Timestamp, LogLevels[StaticCast<int>(Level)], OutputBuffer);
+		bool const bResult = FStringMisc::Format(OutputBuffer2, MaxBufferSize, "[%s][%s] : %s\n", Timestamp, LogLevel, OutputBuffer);
 		if (bResult)
 		{
 			// output formatted message to platform console
@@ -130,8 +104,8 @@ void FConsoleLogger::Log(ELogLevel Level, FString const& Fmt, ...)
 	{
 		TCHAR OutputTrace[MaxBufferSize] = { 0 };
 
-		bool const bResult = FORMAT_LIST(OutputTrace, L"[%s][%s] : %s, line:%i, exception_type:%s", Timestamp,
-			LogLevels[StaticCast<int>(ELogLevel::LogFatal)],
+		bool const bResult = FStringMisc::Format(OutputTrace, MaxBufferSize, "[%s][%s] : %s, line:%i, exception_type:%s", Timestamp,
+			LogLevel,
 			__FILE__,
 			__LINE__,
 			Exception.what());

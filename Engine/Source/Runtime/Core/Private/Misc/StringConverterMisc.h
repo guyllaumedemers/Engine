@@ -20,7 +20,20 @@
 
 #pragma once
 
+#include "Core/Public/CoreMinimal.h"
 #include "Core/Public/Misc/CoreDefines.h"
+
+#ifdef UNICODE
+
+#define FORMAT_VA_LIST(Buffer, Count, Format, Argv) vswprintf_s(Buffer, Count, Format, Argv)
+#define FORMAT_LIST(Buffer, Count, Format, ...) swprintf_s(Buffer, Count, Format, __VA_ARGS__)
+
+#else
+
+#define FORMAT_VA_LIST(Buffer, Count, Format, Argv) vsnprintf_s(Buffer, Count, Format, Argv)
+#define FORMAT_LIST(Buffer, Format, ...) sprintf_s(Buffer, Format, __VA_ARGS__)
+
+#endif
 
 /**
  *	 Helper Object. Offers ANSI, UNICODE encoding conversion api.
@@ -29,7 +42,17 @@ class FStringMisc {
 
 public:
 
-	// https://learn.microsoft.com/en-us/cpp/text/how-to-convert-between-various-string-types?view=msvc-170
-	static TCHAR* Convert(ANSICHAR const* Source);
-	static TCHAR* Convert(WIDECHAR const* Source);
+	static WIDECHAR* Convert(ANSICHAR const* Source);
+
+	template<typename ... TArgs>
+	static int Format(TCHAR* OutBuffer, int MaxBufferSize, ANSICHAR const* Fmt, TArgs&&... Args)
+	{
+		return FORMAT_LIST(OutBuffer, MaxBufferSize, Convert(Fmt), Forward(Args)...);
+	}
+
+	template<typename ... TArgs>
+	static int Format(TCHAR* OutBuffer, int MaxBufferSize, WIDECHAR const* Fmt, TArgs&&... Args)
+	{
+		return FORMAT_LIST(OutBuffer, MaxBufferSize, Fmt, Forward(Args)...);
+	}
 };

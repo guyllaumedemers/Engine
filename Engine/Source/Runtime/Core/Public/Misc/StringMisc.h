@@ -28,8 +28,11 @@
 class FString {
 
 public:
-	// TODO @gdemers 2024-02-17 Expect to be able to react to platform encoding changes and process
-	// string literals in logs without problem!
+	// TODO @gdemers 2024-02-23 Check following link to understand how character size affect pointer arithmetic and how sizeof
+	// return values that are processor dependent
+	// https://www.geeksforgeeks.org/understanding-character-encoding/
+	// https://www.geeksforgeeks.org/wide-char-and-library-functions-in-c/
+	// https://en.cppreference.com/w/cpp/language/sizeof
 	FString(ANSICHAR const* String);
 	FString(WIDECHAR const* String);
 

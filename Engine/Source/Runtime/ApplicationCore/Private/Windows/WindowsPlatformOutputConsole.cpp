@@ -58,11 +58,11 @@ void FWindowsPlatformOutputConsole::WriteOutputConsole(ELogLevel Level, FString 
 		BufferAttributes = FOREGROUND_RED;
 		break;
 	case ELogLevel::LogWarning:
-		BufferAttributes = FOREGROUND_BLUE | FOREGROUND_GREEN;
-		break;
-	case ELogLevel::LogMessage:
 	case ELogLevel::LogDebug:
 	case ELogLevel::LogTrace:
+		BufferAttributes = FOREGROUND_RED | FOREGROUND_GREEN;
+		break;
+	case ELogLevel::LogMessage:
 		BufferAttributes = FOREGROUND_BLUE | FOREGROUND_GREEN | FOREGROUND_RED;
 		break;
 	}

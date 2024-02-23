@@ -23,12 +23,16 @@
 // stl headers
 #include <memory>
 #include <set>
+#include <type_traits>
 #include <unordered_map>
 #include <utility>
 
 #include "Core/Public/Misc/CoreAsserts.h"
 #include "Core/Public/Misc/CoreLogger.h"
 #include "Core/Public/Misc/StringMisc.h"
+
+// TODO @gdemers 2024-02-23 REwork all of this, and do proper investigation on Template creation and metaprogramming
+// RValue Reference vs Universal Reference, etc... Also create custom allocator and template container type
 
 template<typename TKey, typename TValue>
 using TMap = std::unordered_map<TKey, TValue>;
@@ -61,5 +65,17 @@ template<typename T, typename Arg>
 T StaticCast(Arg&& Value)
 {
 	return static_cast<T>(Value);
+}
+
+template<typename T>
+T&& Forward(T& Value)
+{
+	return std::forward<T>(Value);
+}
+
+template<typename T>
+T&& Forward(T&& Value)
+{
+	return std::forward<T>(Value);
 }
 

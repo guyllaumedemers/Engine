@@ -50,7 +50,7 @@ FString::FString(ANSICHAR const* String)
 
 FString::FString(WIDECHAR const* String)
 {
-	STRCPY(Data, FStringMisc::Convert(String));
+	STRCPY(Data, String);
 }
 
 int FString::Length() const

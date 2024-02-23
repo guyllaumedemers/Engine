@@ -50,9 +50,9 @@ enum class ENGINE_API ELogLevel
 	LogFatal = 0,
 	LogError,
 	LogWarning,
-	LogMessage,
 	LogDebug,
-	LogTrace
+	LogTrace,
+	LogMessage
 };
 
 #ifdef DEBUGGING_ENABLED

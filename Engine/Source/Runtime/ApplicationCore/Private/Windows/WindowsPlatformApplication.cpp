@@ -54,7 +54,12 @@ static LRESULT CALLBACK WindowProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM l
 	{
 	case WM_CREATE:
 		{
-			CONSOLE_LOG(ELogLevel::LogMessage, L"Window Creation Success!");
+			CONSOLE_LOG(ELogLevel::LogFatal, "Test");
+			CONSOLE_LOG(ELogLevel::LogError, "Test");
+			CONSOLE_LOG(ELogLevel::LogWarning, "Test");
+			CONSOLE_LOG(ELogLevel::LogDebug, "Test");
+			CONSOLE_LOG(ELogLevel::LogTrace, "Test");
+			CONSOLE_LOG(ELogLevel::LogMessage, "Test");
 		}
 		break;
 	case WM_PAINT:
