@@ -20,11 +20,8 @@
 
 #include "ApplicationCore/Public/Application.h"
 
-#include "Core/Public/Misc/CoreDefines.h"
-
 #ifdef PLATFORM_WINDOWS
 #include "ApplicationCore/Public/Windows/WindowsPlatformApplication.h"
-#include "ApplicationCore/Public/Windows/WindowsWindow.h"
 #endif
 
 // g_var

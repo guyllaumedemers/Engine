@@ -42,11 +42,6 @@ public:
 	virtual void PumpMessages() const override;
 };
 
-/**
- *	Symbol #define. Abstract Platform type (Window, Linux, Mac) from user.
- */
-#include "Core/Public/Misc/CoreDefines.h"
-
 #ifdef PLATFORM_WINDOWS
 typedef FWindowsPlatformApplication FPlatformApplication;
 #endif

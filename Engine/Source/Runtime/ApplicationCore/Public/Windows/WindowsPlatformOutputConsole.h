@@ -39,11 +39,6 @@ public:
 	virtual void WriteOutputConsole(ELogLevel Level, FString const& Buffer) override;
 };
 
-/**
- *	Symbol #define. Abstract Console type (Window, Linux, Mac) from user.
- */
-#include "Core/Public/Misc/CoreDefines.h"
-
 #ifdef PLATFORM_WINDOWS
 typedef FWindowsPlatformOutputConsole FPlatformOutputConsole;
 #endif

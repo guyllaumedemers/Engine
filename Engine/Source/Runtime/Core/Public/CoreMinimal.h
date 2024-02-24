@@ -28,6 +28,7 @@
 #include <utility>
 
 #include "Core/Public/Misc/CoreAsserts.h"
+#include "Core/Public/Misc/CoreDefines.h"
 #include "Core/Public/Misc/CoreLogger.h"
 #include "Core/Public/Misc/StringMisc.h"
 

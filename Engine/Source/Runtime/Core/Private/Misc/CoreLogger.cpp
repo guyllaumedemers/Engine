@@ -40,7 +40,8 @@ namespace
 
 	static TCHAR const* GetTimestamp()
 	{
-		return L"h:m:s";
+		FString const TimeStamp = "";
+		return *TimeStamp;
 	}
 }
 
@@ -54,10 +55,8 @@ void FConsoleLogger::Log(ELogLevel Level, FString const& Fmt, ...)
 	TCHAR OutputBuffer[MaxBufferSize] = { 0 };
 
 	va_list Argv;
-	TCHAR const* LogLevel = GetLogLevels(Level);
-	// TODO @gdemers 2024-02-14 Add timestamp information
-	// TODO @gdemers 2024-02-14 Target Console Context in which we output - a custom process is built for that in our GenericOutputConsole
-	TCHAR const* Timestamp = GetTimestamp();
+	TCHAR const* Timestamp	= GetTimestamp();
+	TCHAR const* LogLevel	= GetLogLevels(Level);
 
 	try
 	{

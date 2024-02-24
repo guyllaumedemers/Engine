@@ -26,9 +26,9 @@
 class FEngineLoop {
 
 public:
-	int		PreInit();
-	int		Init();
-	void	Tick();
-	void	PreExit();
-	void	Exit();
+	int	PreInit();
+	int	Init();
+	void Tick();
+	void PreExit();
+	void Exit();
 };

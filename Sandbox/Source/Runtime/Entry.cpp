@@ -33,6 +33,8 @@ extern ENGINE_API void LaunchWindowShutdown();
 // to compile, link. Figure out how their C# build tool handle that - See: UEToolchain.cs and more.
 int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, PSTR lpCmdLine, int nCmdShow) {
 
+	// understanding how the CRT invoke Main (Console App) or WinMain (Window App)
+	// https://learn.microsoft.com/en-us/windows/win32/learnwin32/winmain--the-application-entry-point
 	const int bErrorlevel = LaunchWindowStartup(hInstance, hPrevInstance, lpCmdLine, nCmdShow);
 	LaunchWindowShutdown();
 	return bErrorlevel;

@@ -20,14 +20,12 @@
 
 #include "ApplicationCore/Public/Windows/WindowsWindow.h"
 
-#include "Core/Public/Misc/CoreDefines.h"
-
 #ifdef PLATFORM_WINDOWS
 
 #include <Windows.h>
 
 // g_var
-extern int			CmdShow;
+extern int CmdShow;
 
 bool FWindowsWindow::Setup(FGenericWindowDefinition const& InDefinition)
 {

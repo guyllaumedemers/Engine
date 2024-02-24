@@ -25,8 +25,6 @@
 #include <Windows.h>
 
 #include "ApplicationCore/Public/Windows/WindowsWindow.h"
-#include "ApplicationCore/Public/Windows/WindowsPlatformOutputConsole.h"
-#include "Core/Public/CoreMinimal.h"
 
 // g_func
 extern void			BeginExitRequest();
@@ -54,12 +52,12 @@ static LRESULT CALLBACK WindowProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM l
 	{
 	case WM_CREATE:
 		{
-			CONSOLE_LOG(ELogLevel::LogFatal, "Test");
-			CONSOLE_LOG(ELogLevel::LogError, "Test");
-			CONSOLE_LOG(ELogLevel::LogWarning, "Test");
-			CONSOLE_LOG(ELogLevel::LogDebug, "Test");
-			CONSOLE_LOG(ELogLevel::LogTrace, "Test");
-			CONSOLE_LOG(ELogLevel::LogMessage, "Test");
+			CONSOLE_LOG(ELogLevel::LogFatal		, "Test");
+			CONSOLE_LOG(ELogLevel::LogError		, "Test");
+			CONSOLE_LOG(ELogLevel::LogWarning	, "Test");
+			CONSOLE_LOG(ELogLevel::LogDebug		, "Test");
+			CONSOLE_LOG(ELogLevel::LogTrace		, "Test");
+			CONSOLE_LOG(ELogLevel::LogMessage	, "Test");
 		}
 		break;
 	case WM_PAINT:
@@ -118,13 +116,6 @@ TSharedPtr<FGenericPlatformApplication> FWindowsPlatformApplication::CreatePlatf
 
 TSharedPtr<FGenericWindow> FWindowsPlatformApplication::MakeWindow()
 {
-	// TODO @gdemers 2024-02-10 For now, we only ever create a single window. Context Data provided here
-	// represent the Application Window.
-	// Move Context Detail generation outside this function so Window creation gets passed
-	// details specific to the calling function and be configured from the caller point of View
-	// i.e 'this' function call should ONLY create an empty context window
-	// and be initialized AFTER
-	// The interface for the Factory method that generate the required data should be platform agnostic
 	FGenericWindowDefinition WindowDefinition{};
 	WindowDefinition.ExStyle			= 0;
 	WindowDefinition.WindowClassName	= EngineClass;

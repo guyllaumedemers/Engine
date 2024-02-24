@@ -33,10 +33,10 @@ class FGenericPlatformOutputConsole {
 public:
 	virtual ~FGenericPlatformOutputConsole() = default;
 
-	static void Create() {}
 	static FGenericPlatformOutputConsole& Get() { return (*PlatformOutputConsole); }
+	static void Create() {}
 
-	virtual void WriteOutputConsole(ELogLevel Level, FString const& Buffer) {}
+	virtual void WriteOutputConsole(ELogLevel Level, FString const& Buffer) = 0;
 
 protected:
 	static TUniquePtr<FGenericPlatformOutputConsole> PlatformOutputConsole;
